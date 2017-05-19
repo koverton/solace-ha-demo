@@ -1,0 +1,84 @@
+{
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo": {
+    "authenticationBasicEnabled": true,
+    "authenticationBasicType": "none",
+    "authorizationType": "internal",
+    "enabled": true,
+    "eventPublishClientEnabled": true,
+    "eventPublishMsgVpnEnabled": true,
+    "eventPublishTopicFormatSmfEnabled": true,
+    "msgVpnName": "ha_demo",
+    "maxMsgSpoolUsage": 100
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/aclProfiles/default": {
+    "aclProfileName": "default",
+    "clientConnectDefaultAction": "allow",
+    "msgVpnName": "ha_demo",
+    "publishTopicDefaultAction": "allow",
+    "subscribeTopicDefaultAction": "allow"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/clientProfiles/default": {
+    "allowBridgeConnectionsEnabled": false,
+    "allowCutThroughForwardingEnabled": false,
+    "allowGuaranteedEndpointCreateEnabled": true,
+    "allowGuaranteedMsgReceiveEnabled": true,
+    "allowGuaranteedMsgSendEnabled": true,
+    "allowTransactedSessionsEnabled": true,
+    "clientProfileName": "default",
+    "msgVpnName": "ha_demo"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/clientUsernames/default": {
+    "aclProfileName": "default",
+    "clientProfileName": "default",
+    "clientUsername": "default",
+    "enabled": true,
+    "guaranteedEndpointPermissionOverrideEnabled": false,
+    "msgVpnName": "ha_demo",
+    "subscriptionManagerEnabled": false
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/queues/app1_input": {
+    "accessType": "exclusive",
+    "egressEnabled": true,
+    "ingressEnabled": true,
+    "maxMsgSpoolUsage": 150,
+    "msgVpnName": "ha_demo",
+    "permission": "delete",
+    "queueName": "app1_input"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/queues/app1_state1": {
+    "accessType": "exclusive",
+    "egressEnabled": true,
+    "ingressEnabled": true,
+    "maxMsgSpoolUsage": 150,
+    "msgVpnName": "ha_demo",
+    "permission": "delete",
+    "queueName": "app1_state1"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/queues/app1_state2": {
+    "accessType": "exclusive",
+    "egressEnabled": true,
+    "ingressEnabled": true,
+    "maxMsgSpoolUsage": 150,
+    "msgVpnName": "ha_demo",
+    "permission": "delete",
+    "queueName": "app1_state2"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/queues/app1_input/subscriptions/order%2Fnew": {
+    "msgVpnName": "ha_demo",
+    "queueName": "app1_input",
+    "subscriptionTopic": "order/new"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/queues/app1_state1/subscriptions/trade%2Fapp1%2Finst2%2F%3E": {
+    "msgVpnName": "ha_demo",
+    "queueName": "app1_state1",
+    "subscriptionTopic": "trade/app1/inst2/>"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/ha_demo/queues/app1_state2/subscriptions/trade%2Fapp1%2Finst1%2F%3E": {
+    "msgVpnName": "ha_demo",
+    "queueName": "app1_state2",
+    "subscriptionTopic": "trade/app1/inst1/>"
+  }
+}
+
+
+

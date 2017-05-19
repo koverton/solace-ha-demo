@@ -1,0 +1,10 @@
+Backup never reaches HAStatus => Backup, only CONNECTED
+
+2017-05-16 15:25:16,853 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - HA Change: DISCONNECTED => CONNECTED
+2017-05-16 15:25:16,862 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - Seq Change: INIT => CONNECTED
+2017-05-16 15:25:16,868 [main] INFO   c.s.demo.MockMatchingEngine - Seq Change: CONNECTED => BOUND
+2017-05-16 15:25:16,888 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - Seq Change: BOUND => RECOVERING
+2017-05-16 15:25:16,891 [solclient-context-1] INFO   c.s.model.ClusterConnector - Recovering all state from the state queue, current sequence state is RECOVERING and sending sentinel message.
+2017-05-16 15:25:16,891 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - HA Change: CONNECTED => ACTIVE
+2017-05-16 15:25:16,923 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - HA Change: ACTIVE => BACKUP
+May 16, 2017 3:25:16 PM com.solacesystems.solclientj.core.impl.util.SolLogger log

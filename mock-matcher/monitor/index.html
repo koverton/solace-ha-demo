@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.vertical{
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+  font-family: sans-serif;
+  color:#666;
+}
+.standard{
+  font-family: sans-serif;
+  color:#666;
+}
+.buy {
+  font-family: sans-serif;
+  color:  white;
+  background-color: green;
+  text-align: right;
+  padding-right: 30px;
+}
+.sell {
+  font-family: sans-serif;
+  color: white;
+  background-color: red;
+  text-align: right;
+  padding-right: 30px;
+}
+.price {
+  font-family: sans-serif;
+  color:#666;
+  text-align: right;
+  padding-right: 30px;
+}
+
+</style>
+<script src="./solclient.js"></script>
+<script src="./monitor.js"></script>
+
+<body onload="init()">
+
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<!--          MONITOR DISPLAY                          -->
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<TABLE id=grid align=center>
+  <TR><TD colspan=3><H1 class=standard align=center>HA Cluster Demo</H1></TD></TR>
+  <TR>
+    <td width=110></td>
+    <TD width=110 class="standard" align=center>Instance 1</TD>
+    <TD width=110 class="standard" align=center>Instance 2</TD>
+  </TR>
+  <TR>
+    <TD width=110 class="standard" align=right>HA Status:</TD>
+    <TD width=110 class="standard"><input size=15 id=haStatus1></TD>
+    <TD width=110 class="standard"><input size=15 id=haStatus2></TD>
+  </TR>
+  <TR>
+    <TD width=110 class="standard" align=right>Seq Status:</TD>
+    <TD width=110 class="standard"><input size=15 id=seqStatus1></TD>
+    <TD width=110 class="standard"><input size=15 id=seqStatus2></TD>
+  </TR>
+  <TR>
+    <TD width=110 class="standard" align=right>Last Input:</TD>
+    <TD width=110 class="standard"><input size=15 id=lastInput1></TD>
+    <TD width=110 class="standard"><input size=15 id=lastInput2></TD>
+  </TR>
+  <TR>
+    <TD width=110 class="standard" align=right>Last Output:</TD>
+    <TD width=110 class="standard"><input size=15 id=lastOutput1></TD>
+    <TD width=110 class="standard"><input size=15 id=lastOutput2></TD>
+  </TR>
+  <TR id="trade_announce"><TD class="standard" colspan=3></TD></TR>
+</TABLE>
+<!-- input align=center id=lastDisconnect -->
+
+</body>
+</html>

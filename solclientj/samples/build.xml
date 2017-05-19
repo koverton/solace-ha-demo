@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project basedir="." name="solclientj_samples" default="build">
+
+    <condition property="jre_path" value="/opt/tools/jdk/jdk1.6.0_45/jre/lib" else="\\solace\loads\third-party\Java\jdk1.6.0_45\jre\lib">
+        <os family="unix" />
+    </condition>
+
+    <path id="boot.class.path">
+        <fileset dir="${jre_path}" includes="*.jar"/>
+        <pathelement path="${sun.boot.class.path}"/>
+    </path>
+                                            
+	<target name="init">
+		<property environment="env" />
+		<property file="${basedir}/build.properties" />
+		<property name="debuglevel" value="source,lines,vars" />
+		<property name="target" value="1.6" />
+		<property name="source" value="1.6" />
+		<mkdir dir="${basedir}/classes" />
+		<!-- 32 and 64 bit JVM -->
+		<condition property="env.JAVA_HOME_32.set">
+			<isset property="env.JAVA_HOME_32"/>
+		</condition>
+		<condition property="env.JAVA_HOME_64.set">
+			<isset property="env.JAVA_HOME_64"/>
+		</condition>
+	</target>
+
+	<target name="clean">
+		<delete dir="${basedir}/classes" />
+	</target>
+
+    <target name="check_jre">
+        <condition property="jre.exists">
+            <available file="${jre_path}" type="dir"/>
+        </condition>
+    </target>
+
+	<target depends="check_jre,compile_no_bootclasspath, compile" name="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+	</target>
+		
+	<target depends="init,clean" name="compile" if="jre.exists">
+		<echo message="${ant.project.name}: ${ant.file}" />
+	    <mkdir dir="${basedir}/classes" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${basedir}/classes" includeantruntime="false" source="${source}" target="${target}">
+			<src path="${basedir}/src" />
+			<classpath>
+				<fileset dir="${basedir}/../lib/" includes="**/*.jar"/>
+			</classpath>
+            <bootclasspath refid="boot.class.path" />
+		</javac>
+	</target>
+	<target depends="init,clean" name="compile_no_bootclasspath" unless="jre.exists">
+		<echo message="${ant.project.name}: ${ant.file}" />
+	    <mkdir dir="${basedir}/classes" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${basedir}/classes" includeantruntime="false">
+			<src path="${basedir}/src" />
+			<classpath>
+				<fileset dir="${basedir}/../lib/" includes="**/*.jar"/>
+			</classpath>
+		</javac>
+	</target>
+	
+</project>

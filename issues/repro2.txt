@@ -1,0 +1,6 @@
+No backup, primary throws internal C errors and remains backup, not processing input.
+
+2017-05-16 15:29:00,602 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - HA Change: DISCONNECTED => CONNECTED
+2017-05-16 15:29:00,610 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - Seq Change: INIT => CONNECTED
+2017-05-16 15:29:00,616 [main] INFO   c.s.demo.MockMatchingEngine - Seq Change: CONNECTED => BOUND
+2017-05-16 15:29:00,636 [solclient-context-1] INFO   c.s.demo.MockMatchingEngine - Seq Change: BOUND => RECOVERING

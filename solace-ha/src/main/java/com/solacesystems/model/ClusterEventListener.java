@@ -6,7 +6,7 @@ package com.solacesystems.model;
  *
  * - HAState change:  from Backup to Active or vice versa
  * - SeqState change: what the application's state is with respect to the state-queue stream;
- *                    e.g. recovering, up-to-date, etc.
+ *                    e.g. following, up-to-date, etc.
  * - State message:   when the LastValueQueue of the cluster has been read to provide
  *                    last known state of the application cluster
  * - Input message:   when a new input message is read by the ClusterConnector
@@ -25,7 +25,7 @@ public interface ClusterEventListener<InputType, OutputType> {
     void OnHAStateChange(HAState oldState, HAState newState);
 
     /**
-     * Sequence State changes can include: Connected, Bound, Recovering, RecoveringFromFlow, UpToDate
+     * Sequence State changes can include: Init, Connected, Bound, Following, UpToDate
      *
      * @param oldState -- previous Sequence State
      * @param newState -- new Sequence State

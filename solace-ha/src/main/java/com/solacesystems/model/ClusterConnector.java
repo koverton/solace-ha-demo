@@ -208,7 +208,7 @@ public class ClusterConnector<InputType, OutputType> {
                 break;
             case SolEnum.FlowEventCode.ACTIVE:
                 _model.SetHAStatus(HAState.BACKUP);
-                _model.SetSequenceStatus(SeqState.RECOVERING);
+                _model.SetSequenceStatus(SeqState.FOLLOWING);
                 break;
             case SolEnum.FlowEventCode.INACTIVE:
                 break;
@@ -286,7 +286,7 @@ public class ClusterConnector<InputType, OutputType> {
         logger.info(
                 "Recovering all state from the state queue, current sequence state is {} and sending sentinel message.",
                 _model.GetSequenceStatus());
-        _model.SetSequenceStatus(SeqState.RECOVERING);
+        _model.SetSequenceStatus(SeqState.FOLLOWING);
         _connector.SendSentinel(_stateQueueName, SENTINEL);
     }
 

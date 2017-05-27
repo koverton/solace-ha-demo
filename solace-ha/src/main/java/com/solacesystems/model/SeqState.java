@@ -19,7 +19,7 @@ public enum SeqState {
     /**
      * The instance is connected to the cluster and reading from the state queue while waiting for the ACTIVE indication
      */
-    RECOVERING,
+    FOLLOWING,
     /**
      * The instance is connected to the cluster and it's application state is caught up with the state-queue flow.
      */

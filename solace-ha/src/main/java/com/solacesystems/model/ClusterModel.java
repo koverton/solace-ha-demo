@@ -70,8 +70,13 @@ public class ClusterModel<InputType, OutputType> {
     public String toString() {
         return  "] HA = ["  + _haStatus +
                 "] SEQ = [" + _seqStatus +
-                "] IN = ["  + (_lastInput==null ? "(null)" : _lastInput.toString()) +
-                "] OUT = [" + (_lastOutput==null ? "(null)" : _lastOutput.toString()) + "]";
+                "] IN = ["  + stringOrNull(_lastInput) +
+                "] OUT = [" + stringOrNull(_lastOutput) + "]";
+    }
+
+    private static String stringOrNull(Object obj) {
+        if (obj == null) return "(null)";
+        return obj.toString();
     }
 
     private InputType  _lastInput;

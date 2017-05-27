@@ -21,7 +21,7 @@ function setFieldValue(name, value) {
     field.innerHTML = value
     if (among(value, ['ACTIVE', 'UP_TO_DATE']))
         field.className = 'active'
-    else if (among(value, ['BACKUP', 'RECOVERING']))
+    else if (among(value, ['BACKUP', 'FOLLOWING']))
         field.className = 'backup'
     else if (among(value, ['Init', 'Disconnected']))
         field.className = 'transitory'

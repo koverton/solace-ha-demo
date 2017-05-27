@@ -10,7 +10,7 @@ class AppStateHelper {
         state.setInstance( 1 );
         state.setInstrument( "MSFT" );
         state.setHAStatus( HAState.CONNECTED );
-        state.setSeqStatus( SeqState.RECOVERING );
+        state.setSeqStatus( SeqState.FOLLOWING);
         state.setLastInput( 12345L );
         state.setLastOutput( 123456L );
 

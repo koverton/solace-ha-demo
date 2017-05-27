@@ -63,7 +63,7 @@ public interface ClusterEventListener<InputType, OutputType> {
     void OnHAStateChange(HAState oldState, HAState newState);
 
     /**
-     * Sequence State changes can include: Connected, Bound, Recovering, RecoveringFromFlow, UpToDate
+     * Sequence State changes can include: Connected, Bound, Following, UpToDate
      */
     void OnSeqStateChange(SeqState oldState, SeqState newState);
 

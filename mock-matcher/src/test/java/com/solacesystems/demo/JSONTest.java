@@ -39,7 +39,7 @@ public class JSONTest {
     public void appStateRoundtripTest() {
         // Test Serialization
         MatcherState state = AppStateHelper.makeAppState( 8, 100, 0.25 );
-        JSONObject json= JSONSerializer.SerializeAppState( state );
+        JSONObject json= JSONSerializer.SerializeMatcherState( state );
         System.out.println( "Testing appstate: " + json.toJSONString() );
         // Compare scalars
         assertEquals( state.getApp(), json.get("app") );
@@ -53,7 +53,7 @@ public class JSONTest {
         testMatcher( state.getMatcher(), (JSONObject)json.get("data") );
 
         // Test Deserialization
-        MatcherState last = JSONSerializer.DeserializeAppState( json );
+        MatcherState last = JSONSerializer.DeserializeMatcherState( json );
         // Compare scalars
         assertEquals( state.getApp(),       last.getApp() );
         assertEquals( state.getInstance() , last.getInstance() );

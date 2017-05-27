@@ -53,7 +53,7 @@ class JSONSerializer {
     ///
     /// - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
 
-    static JSONObject SerializeAppState(MatcherState output) {
+    static JSONObject SerializeMatcherState(MatcherState output) {
         JSONObject json = new JSONObject();
         json.put( "app" , output.getApp() );
         json.put( "instance" , output.getInstance() );
@@ -66,7 +66,7 @@ class JSONSerializer {
         return json;
     }
 
-    static MatcherState DeserializeAppState(JSONObject json) {
+    static MatcherState DeserializeMatcherState(JSONObject json) {
         MatcherState state = new MatcherState();
         try {
             state.setApp( stringOrEmpty(json, "app") );

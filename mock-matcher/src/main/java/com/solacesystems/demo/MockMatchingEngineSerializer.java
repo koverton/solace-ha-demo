@@ -1,7 +1,6 @@
 package com.solacesystems.demo;
 
 import com.solacesystems.model.ClusteredAppSerializer;
-import com.solacesystems.solclientj.core.handle.MessageHandle;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -36,7 +35,7 @@ class MockMatchingEngineSerializer implements ClusteredAppSerializer<ClientOrder
 
     public ByteBuffer SerializeOutput(MatcherState output) {
         _outmsgbuf.clear();
-        String jsonstr = JSONSerializer.SerializeAppState(output).toJSONString();
+        String jsonstr = JSONSerializer.SerializeMatcherState(output).toJSONString();
         _outmsgbuf.put(jsonstr.getBytes());
         return _outmsgbuf;
     }
@@ -46,7 +45,7 @@ class MockMatchingEngineSerializer implements ClusteredAppSerializer<ClientOrder
         try {
             String jsonStr = getJsonString( msg );
             JSONObject json = (JSONObject) _parser.parse( jsonStr );
-            state = JSONSerializer.DeserializeAppState( json );
+            state = JSONSerializer.DeserializeMatcherState( json );
         }
         catch(ParseException pe) {
             logger.error("Error parsing incoming JSON message");

@@ -5,14 +5,18 @@
   transform: rotate(-90deg);
   transform-origin: left top 0;
   font-family: sans-serif;
+  font-weight: normal;
   color:#666;
 }
 .standard{
   font-family: sans-serif;
+  font-weight: normal;
   color:#666;
+  padding-left: 20px;
 }
 .buy {
   font-family: sans-serif;
+  font-weight: normal;
   color:  white;
   background-color: green;
   text-align: right;
@@ -20,6 +24,7 @@
 }
 .sell {
   font-family: sans-serif;
+  font-weight: normal;
   color: white;
   background-color: red;
   text-align: right;
@@ -27,16 +32,46 @@
 }
 .price {
   font-family: sans-serif;
+  font-weight: normal;
   color:#666;
   text-align: right;
   padding-right: 30px;
 }
-
+.active {
+  font-family: sans-serif;
+  font-weight: normal;
+  color:  white;
+  background-color: green;
+  padding-left: 20px;
+}
+.backup {
+  font-family: sans-serif;
+  font-weight: normal;
+  color:  white;
+  background-color: gray;
+  padding-left: 20px;
+}
+.transitory {
+  font-family: sans-serif;
+  font-weight: bold;
+  color:  red;
+  background-color: yellow;
+  padding-left: 20px;
+}
 </style>
-<script src="./solclient.js"></script>
-<script src="./monitor.js"></script>
 
-<body onload="init()">
+<script src="./solclient.js"></script>
+<script src="./connector.js"></script>
+<script src="./monitor.js"></script>
+<script src="./matcher.js"></script>
+<script src="./trades.js"></script>
+<!--
+<script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
+<script src="./hypergrid-ladder.js"></script>
+-->
+<script src="./html-ladder.js"></script>
+
+<body bgcolor='black' fgcolor='white' onload="init()">
 
 <!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
 <!--          MONITOR DISPLAY                          -->
@@ -50,27 +85,27 @@
   </TR>
   <TR>
     <TD width=110 class="standard" align=right>HA Status:</TD>
-    <TD width=110 class="standard"><input size=15 id=haStatus1></TD>
-    <TD width=110 class="standard"><input size=15 id=haStatus2></TD>
+    <TD width=110 class="standard" id=haStatus1></TD>
+    <TD width=110 class="standard" id=haStatus2></TD>
   </TR>
   <TR>
     <TD width=110 class="standard" align=right>Seq Status:</TD>
-    <TD width=110 class="standard"><input size=15 id=seqStatus1></TD>
-    <TD width=110 class="standard"><input size=15 id=seqStatus2></TD>
+    <TD width=110 class="standard" id=seqStatus1></TD>
+    <TD width=110 class="standard" id=seqStatus2></TD>
   </TR>
   <TR>
     <TD width=110 class="standard" align=right>Last Input:</TD>
-    <TD width=110 class="standard"><input size=15 id=lastInput1></TD>
-    <TD width=110 class="standard"><input size=15 id=lastInput2></TD>
+    <TD width=110 class="standard" id=lastInput1></TD>
+    <TD width=110 class="standard" id=lastInput2></TD>
   </TR>
   <TR>
     <TD width=110 class="standard" align=right>Last Output:</TD>
-    <TD width=110 class="standard"><input size=15 id=lastOutput1></TD>
-    <TD width=110 class="standard"><input size=15 id=lastOutput2></TD>
+    <TD width=110 class="standard" id=lastOutput1></TD>
+    <TD width=110 class="standard" id=lastOutput2></TD>
   </TR>
   <TR id="trade_announce"><TD class="standard" colspan=3></TD></TR>
+    <TR><TD></TD><TD class="standard" colspan=2><div id="ladder"></div></TD></TR>
 </TABLE>
-<!-- input align=center id=lastDisconnect -->
 
 </body>
 </html>

@@ -56,16 +56,14 @@ class MockMatchingEngineSerializer implements ClusteredAppSerializer<ClientOrder
 
     private String getJsonString(ByteBuffer buff) {
         int sz = buff.limit();
-        System.out.println("Getting content from bytebuffer with limit: " + sz);
+        logger.debug("Getting content from bytebuffer with limit: {}", sz);
         byte[] data = new byte[sz];
         buff.get(data, 0, sz);
         String out = new String(data);
-        System.out.println("Getting JSON content: " + out);
+        logger.debug("Getting JSON content: {}", out);
         return out;
     }
 
     private final JSONParser _parser    = new JSONParser();
-    private final ByteBuffer _lvqmsgbuf = ByteBuffer.allocate(8192);
-    private final ByteBuffer _inmsgbuf  = ByteBuffer.allocate(8192);
     private final ByteBuffer _outmsgbuf = ByteBuffer.allocate(8192);
 }

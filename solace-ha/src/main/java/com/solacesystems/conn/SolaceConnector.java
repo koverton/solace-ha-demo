@@ -126,6 +126,29 @@ public class SolaceConnector {
         return flowHandle;
     }
 
+    public void SubscribeDirect(final DirectMessageHandler handler) {
+        _sess.subscribe(
+                Solclient.Allocator.newMessageDispatchTargetHandle(
+                    Solclient.Allocator.newTopic( handler.getSubscriptionTopic() ),
+                    new MessageCallback() {
+                        public void onMessage(Handle handle) {
+                            MessageSupport ms = (MessageSupport) handle;
+                            MessageHandle msg = ms.getRxMessage();
+                            String topic = msg.getDestination().getName();
+                            ByteBuffer container = handler.getBuffer();
+                            container.clear();
+                            msg.getBinaryAttachment( container );
+                            container.flip();
+                            handler.onMessage( topic, container );
+                        }
+                    },
+                    false
+                ),
+                SubscribeFlags.WAIT_FOR_CONFIRM,
+                0
+        );
+    }
+
     public void SubscribeQueueToTopic(String name, String subscription) {
         Queue queue = Solclient.Allocator.newQueue(name, null);
         Topic topic = Solclient.Allocator.newTopic(subscription);

@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-public class FunctionalTests {
+public class ConnectorFunctionalTests {
     private final static String SUBSCRIPTION_TOPIC = "how/are/you/then/pretty/good/and/you";
     private final static String HOST = "192.168.56.151";
     private final static String VPN  = "ha_demo";

@@ -16,16 +16,12 @@ import java.nio.ByteBuffer;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.solacesystems.ConnectionFields.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 public class ConnectorFunctionalTests {
     private final static String SUBSCRIPTION_TOPIC = "how/are/you/then/pretty/good/and/you";
-    private final static String HOST = "192.168.56.151";
-    private final static String VPN  = "ha_demo";
-    private final static String USER = "fntest";
-    private final static String PASS = "fntest";
-    private final static String CLNM = "fntest01";
 
     final static String sentMessage = "Hello all you happy people.";
     final static ByteBuffer inbuff = ByteBuffer.allocate(128);
@@ -37,7 +33,7 @@ public class ConnectorFunctionalTests {
     @BeforeClass
     public static void setupConnector() {
         _connector = new SolaceConnector();
-        _connector.ConnectSession(HOST, VPN, USER, PASS, CLNM,
+        _connector.ConnectSession(HOST, VPN, USER, PASS, ConnectorFunctionalTests.class.getName(),
                 new SessionEventCallback() {public void onEvent(SessionHandle sessionHandle) {}});
     }
 
@@ -82,7 +78,7 @@ public class ConnectorFunctionalTests {
         _connector.SubscribeDirect( handler );
         outbuff.clear();
         outbuff.put(sentMessage.getBytes());
-        _connector.SendOutput(SUBSCRIPTION_TOPIC, outbuff);
+        _connector.SendBuffer(SUBSCRIPTION_TOPIC, outbuff);
 
         waitabit();
         assertTrue( gotit.get() );

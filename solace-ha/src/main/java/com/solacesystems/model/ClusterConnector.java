@@ -105,21 +105,23 @@ public class ClusterConnector<InputType, OutputType> {
         }
     }
 
+    public SolaceConnector getConnector() { return _connector; }
+
     public void SendSerializedOutput(String topic, ByteBuffer output) {
         // Just in case you need to send multiple outputs
-        _connector.SendOutput(topic, output);
+        _connector.SendBuffer(topic, output);
     }
 
-    public void SendOutput(String activeTopic, String standbyTopic, OutputType output) {
+    public void SendOutput(String activeTopic, OutputType output) {
         // If we're the active member of the cluster, we are responsible
         // for all output but don't publish until we have new input data
         if (_model.GetHAStatus() == HAState.ACTIVE)
         {
             if(_model.GetSequenceStatus() == SeqState.UP_TO_DATE)
-                _connector.SendOutput(activeTopic, _serializer.SerializeOutput(output));
+                _connector.SendBuffer(activeTopic, _serializer.SerializeOutput(output));
         }
         else {
-            _connector.SendOutput(standbyTopic, _serializer.SerializeOutput(output));
+            logger.info("NOT sending output because HA status is not active.");
         }
 
     }

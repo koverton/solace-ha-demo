@@ -158,7 +158,7 @@ public class SolaceConnector {
             throw new IllegalStateException("Failed to bind Solace queue to topic");
     }
 
-    public void SendOutput(String sendTopic, ByteBuffer payload) {
+    public void SendBuffer(String sendTopic, ByteBuffer payload) {
         payload.flip();
         _outmsg.setBinaryAttachment(payload);
         _outmsg.deleteApplicationMessageType();

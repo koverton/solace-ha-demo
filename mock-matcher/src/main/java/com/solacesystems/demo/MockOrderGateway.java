@@ -61,7 +61,7 @@ class MockOrderGateway {
     {
         ClientOrder order = OrderHelper.nextOrder(oid, _symbol, 100, 0.25);
         logger.info("Sending msg: {}", order);
-        _connector.SendOutput(_outTopic, _serializer.SerializeInput(order));
+        _connector.SendBuffer(_outTopic, _serializer.SerializeInput(order));
     }
 
     private final String _symbol;

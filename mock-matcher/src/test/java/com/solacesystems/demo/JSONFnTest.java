@@ -117,7 +117,7 @@ public class JSONFnTest {
 
 
         ByteBuffer outbuff = serializer.SerializeInput(input);
-        conn.SendOutput( "delete/me", outbuff );
+        conn.SendBuffer( "delete/me", outbuff );
         while(received.get() < 1) {
             try {
                 Thread.sleep(200);

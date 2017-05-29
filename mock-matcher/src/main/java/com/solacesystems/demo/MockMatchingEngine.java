@@ -57,8 +57,9 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         _state.setInstance( instance );
         _state.setInstrument( "AAPL" ); // TODO FIX
         // Underlying cluster model and message-bus connector
+        _serializer = new MockMatchingEngineSerializer();
         _model = new ClusterModel<ClientOrder, MatcherState>( this );
-        _connector = new ClusterConnector<ClientOrder, MatcherState>( _model, new MockMatchingEngineSerializer() );
+        _connector = new ClusterConnector<ClientOrder, MatcherState>( _model, _serializer);
     }
 
     public void Connect(String host, String vpn, String user, String pass) {
@@ -91,7 +92,7 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
 
         // Track results of new orders
         List<Trade> trades = _state.addOrder(input);
-        _connector.SendOutput(_activeTopic, _standbyTopic, _state);
+        _connector.SendOutput(_activeTopic, _state);
         sendTradeAnnouncements( trades );
 
         return _state;
@@ -115,7 +116,8 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
     private void sendMonitorUpdate() {
         if (_model.GetHAStatus() != HAState.DISCONNECTED) {
             logger.debug("Sending monitor update with HA Status {}", _model.GetHAStatus());
-            _connector.SendOutput(_activeTopic, _standbyTopic, _state);
+            _connector.SendOutput(_activeTopic, _state);
+            _connector.SendSerializedOutput(_standbyTopic, _serializer.SerializeOutput(_state));
         }
     }
 
@@ -131,6 +133,7 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
 
     private final ClusterModel<ClientOrder,MatcherState> _model;
     private final ClusterConnector<ClientOrder,MatcherState> _connector;
+    private final MockMatchingEngineSerializer _serializer;
     private final MatcherState _state;
     private final ByteBuffer _sndbuf = ByteBuffer.allocate(256);
 

@@ -62,10 +62,25 @@ function updateMatcherUI(record) {
     setFieldValue('seqStatus' + record.instance, record.seqStatus)
     setFieldValue('lastInput' + record.instance, gt0(record.lastInput))
     setFieldValue('lastOutput' + record.instance, gt0(record.lastOutput))
+    updateCtlButton(record)
 }
 function gt0(value) {
   if (value > 0) return value
   return '-'
+}
+
+function updateCtlButton(record) {
+    var id = 'ctl'+record.instance
+    var field = document.getElementById(id)
+    field.disabled  = false
+    if (record.seqStatus == 'Disconnected') {
+        field.innerHTML = 'O'
+        field.style.backgroundColor = 'green'
+    }
+    else {
+        field.innerHTML = 'X'
+        field.style.backgroundColor = 'red'
+    }
 }
 
 function onMatcherStatus(topic, payload) {

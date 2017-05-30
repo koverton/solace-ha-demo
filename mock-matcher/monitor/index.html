@@ -58,6 +58,10 @@
   background-color: yellow;
   padding-left: 20px;
 }
+.button {
+  border: none;
+  border-radius: 4px;
+}
 </style>
 
 <script src="./solclient.js"></script>
@@ -80,8 +84,8 @@
   <TR><TD colspan=3><H1 class=standard align=center>HA Cluster Demo</H1></TD></TR>
   <TR>
     <td width=110></td>
-    <TD width=110 class="standard" align=center>Instance 1</TD>
-    <TD width=110 class="standard" align=center>Instance 2</TD>
+    <TD width=110 class="standard" align=left><button id="ctl1" onclick="procCtl(1);" class="button">X</button> Instance 1</TD>
+    <TD width=110 class="standard" align=right>Instance 2 <button id="ctl2" onclick="procCtl(2);" class="button">X</button></TD>
   </TR>
   <TR>
     <TD width=110 class="standard" align=right>HA Status:</TD>

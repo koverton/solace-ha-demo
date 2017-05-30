@@ -1,11 +1,27 @@
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 //        Monitor Code
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
+var APPID       = 'app1'
 
 function init() {
   initMatcher()
   initLadder()
   initSolaceConn()
+}
+
+function procCtl(instance) {
+    var field = document.getElementById('ctl'+instance)
+    field.style.backgroundColor = 'gray'
+    field.disabled  = true
+    field.innerHTML = '-'
+    var op = 'none'
+    var rec = getRecord(instance-1)
+    if (rec.seqStatus == 'Disconnected')
+        op = 'start'
+    else
+        op = 'kill'
+    var topic = APPID + '/control/' + op + '/' + instance
+    sendEmpty(topic)
 }
 
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -

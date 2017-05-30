@@ -87,3 +87,15 @@ function message_cb(sess, msg, uo, unused) {
       }
   }
 }
+
+function sendEmpty(topic) {
+    var msg = solace.SolclientFactory.createMessage()
+    msg.setDestination(solace.SolclientFactory.createTopic(topic))
+    msg.setDeliveryMode(solace.MessageDeliveryModeType.DIRECT)
+    try {
+        sess.send(msg)
+    } catch (err) {
+        console.log('Failed to send message: ' + msg.toString())
+        console.log(err.toString() + err.Message)
+    }
+}

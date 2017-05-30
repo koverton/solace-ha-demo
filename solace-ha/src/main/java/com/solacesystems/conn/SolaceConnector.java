@@ -136,9 +136,11 @@ public class SolaceConnector {
                             MessageHandle msg = ms.getRxMessage();
                             String topic = msg.getDestination().getName();
                             ByteBuffer container = handler.getBuffer();
-                            container.clear();
-                            msg.getBinaryAttachment( container );
-                            container.flip();
+                            if (container != null) {
+                                container.clear();
+                                msg.getBinaryAttachment(container);
+                                container.flip();
+                            }
                             handler.onMessage( topic, container );
                         }
                     },

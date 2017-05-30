@@ -1,23 +1,9 @@
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 //        Connectivity Info
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
-//// My local VMR
-var SOLACE_URL  = 'ws://192.168.56.151'
-var SOLACE_VPN  = 'ha_demo'
-var SOLACE_USER = 'monitor'
-var SOLACE_PASS = 'monitor'
-//// My DataGo Service
-// var SOLACE_URL  = 'ws://msgvpn-3419.messaging.datago.io:20131'
-// var SOLACE_VPN  = 'msgvpn-3419'
-// var SOLACE_USER = 'datago-client-username'
-// var SOLACE_PASS = '72f9nie8jpfdaj8gjse23vr21t'
 
 //// App-specific stuff
-var APPID       = 'app1'
-var ACTIVE_SUB  = 'active_matcher/'  + APPID + '/>'
-var STANDBY_SUB = 'standby_matcher/' + APPID + '/>'
-var TRADE_SUB   = 'trade/'           + APPID + '/>'
-var DISCONN_SUB = '#LOG/INFO/CLIENT/*/CLIENT_CLIENT_DISCONNECT/>'
+var ha_topics = null
 
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 //       Solace code
@@ -28,15 +14,16 @@ var sess = null // The Solace session instance
 
 //  Initialize solace session and connect
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -
-function initSolaceConn() {
+function initSolaceConn(conn_props, topics) {
+  ha_topics = topics
   var factoryProps = new solace.SolclientFactoryProperties()
   factoryProps.logLevel = solace.LogLevel.INFO
   solace.SolclientFactory.init(factoryProps)
   var props = new solace.SessionProperties()
-  props.url      = SOLACE_URL
-  props.vpnName  = SOLACE_VPN
-  props.userName = SOLACE_USER
-  props.password = SOLACE_PASS
+  props.url      = conn_props.url
+  props.vpnName  = conn_props.vpn
+  props.userName = conn_props.user
+  props.password = conn_props.pass
   try {
     sess = solace.SolclientFactory.createSession(props,
             new solace.MessageRxCBInfo(message_cb, data),
@@ -55,16 +42,16 @@ function session_cb(sess, evt, userobj) {
   // Wait until the session is UP before subscribing
   if (evt.sessionEventCode == solace.SessionEventCode.UP_NOTICE) {
     // Listen to updates from the active process
-    var topic = solace.SolclientFactory.createTopic(ACTIVE_SUB)
+    var topic = solace.SolclientFactory.createTopic(ha_topics.active_sub)
     sess.subscribe(topic, true, 'active', 3000)
     // Listen to updates from the standby process
-    topic = solace.SolclientFactory.createTopic(STANDBY_SUB)
+    topic = solace.SolclientFactory.createTopic(ha_topics.standby_sub)
     sess.subscribe(topic, true, 'standby', 3000)
     // Listen for trade announcements from the active matcher
-    topic = solace.SolclientFactory.createTopic(TRADE_SUB)
+    topic = solace.SolclientFactory.createTopic(ha_topics.trade_sub)
     sess.subscribe(topic, true, 'trades', 3000)
     // Listen to disconnect/connect events
-    topic = solace.SolclientFactory.createTopic(DISCONN_SUB)
+    topic = solace.SolclientFactory.createTopic(ha_topics.disconn_sub)
     sess.subscribe(topic, true, 'monitor', 3000)
   }
   // Reconnect if we've disconnected

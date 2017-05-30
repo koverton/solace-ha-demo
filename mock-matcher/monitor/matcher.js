@@ -85,6 +85,10 @@ function updateCtlButton(record) {
     }
 }
 
+//  - + - + - + - + - + - + - + - + - + - + - + - + - + -
+// Messaging Event Interaction
+//  - + - + - + - + - + - + - + - + - + - + - + - + - + -
+
 function onMatcherStatus(topic, payload) {
     // MATCHER UPDATE
     var update = JSON.parse(payload)

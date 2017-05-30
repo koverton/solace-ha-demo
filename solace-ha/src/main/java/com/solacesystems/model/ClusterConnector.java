@@ -121,7 +121,7 @@ public class ClusterConnector<InputType, OutputType> {
                 _connector.SendBuffer(activeTopic, _serializer.SerializeOutput(output));
         }
         else {
-            logger.info("NOT sending output because HA status is not active.");
+            logger.debug("NOT sending output because HA status is not active.");
         }
 
     }

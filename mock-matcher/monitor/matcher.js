@@ -58,10 +58,10 @@ function initMatcher() {
 }
 
 function updateMatcherUI(record) {
-    setFieldValue('haStatus' + record.instance, record.haStatus)
+    setFieldValue('haStatus'  + record.instance, record.haStatus)
     setFieldValue('seqStatus' + record.instance, record.seqStatus)
     setFieldValue('lastInput' + record.instance, gt0(record.lastInput))
-    setFieldValue('lastOutput' + record.instance, gt0(record.lastOutput))
+    setFieldValue('lastOutput'+ record.instance, gt0(record.lastOutput))
     updateCtlButton(record)
 }
 function gt0(value) {
@@ -75,10 +75,12 @@ function updateCtlButton(record) {
     field.disabled  = false
     if (record.seqStatus == 'Disconnected') {
         field.innerHTML = 'O'
+        field.title = 'Click to Start'
         field.style.backgroundColor = 'green'
     }
     else {
         field.innerHTML = 'X'
+        field.title = 'Click to Stop'
         field.style.backgroundColor = 'red'
     }
 }

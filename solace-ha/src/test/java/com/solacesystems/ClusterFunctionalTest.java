@@ -100,10 +100,10 @@ public class ClusterFunctionalTest {
         return app;
     }
 
-    private final String inputTopic = "fntest/input";
+    private final String inputTopic    = "fntest/input";
     private final String inst1OutTopic = "fntest/out/1";
     private final String inst2OutTopic = "fntest/out/2";
-    private final String inputQueue = "fntest_input";
+    private final String inputQueue    = "fntest_input";
 
     private HA_Application instance1, instance2;
     private ClusterModel<Integer,Double> model1, model2;

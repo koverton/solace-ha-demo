@@ -1,7 +1,7 @@
-package com.solacesystems.model;
+package com.solacesystems.ha.model;
 
-import com.solacesystems.conn.Helper;
-import com.solacesystems.conn.SolaceConnector;
+import com.solacesystems.ha.conn.Helper;
+import com.solacesystems.ha.conn.SolaceConnector;
 import com.solacesystems.solclientj.core.SolEnum;
 import com.solacesystems.solclientj.core.SolclientException;
 import com.solacesystems.solclientj.core.event.*;

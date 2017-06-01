@@ -1,4 +1,4 @@
-package com.solacesystems.model;
+package com.solacesystems.ha.model;
 
 /**
  * Represents the application cluster member HA state

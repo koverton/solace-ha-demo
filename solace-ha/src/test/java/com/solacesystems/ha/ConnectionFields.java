@@ -1,4 +1,4 @@
-package com.solacesystems;
+package com.solacesystems.ha;
 
 class ConnectionFields {
     public final static String HOST = "192.168.56.151";

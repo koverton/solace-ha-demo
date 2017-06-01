@@ -1,6 +1,6 @@
 package com.solacesystems.demo;
 
-import com.solacesystems.conn.SolaceConnector;
+import com.solacesystems.ha.conn.SolaceConnector;
 import com.solacesystems.solclientj.core.event.FlowEventCallback;
 import com.solacesystems.solclientj.core.event.MessageCallback;
 import com.solacesystems.solclientj.core.event.SessionEventCallback;

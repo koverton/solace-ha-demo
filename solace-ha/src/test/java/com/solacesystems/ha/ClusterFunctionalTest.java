@@ -1,7 +1,7 @@
-package com.solacesystems;
+package com.solacesystems.ha;
 
-import com.solacesystems.conn.SolaceConnector;
-import com.solacesystems.model.*;
+import com.solacesystems.ha.conn.SolaceConnector;
+import com.solacesystems.ha.model.*;
 import com.solacesystems.solclientj.core.event.SessionEventCallback;
 import com.solacesystems.solclientj.core.handle.SessionHandle;
 import org.junit.After;
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.nio.ByteBuffer;
 
-import static com.solacesystems.ConnectionFields.*;
 import static junit.framework.Assert.assertEquals;
 
 public class ClusterFunctionalTest {
@@ -41,7 +40,7 @@ public class ClusterFunctionalTest {
 
         public void Start(String inputQueueName, String inputTopicName, String stateQueueName, String stateQueueTopic) {
             _stateQueue = stateQueueName;
-            _connector.Connect(HOST, VPN, USER, PASS, HA_Application.class.getName() + _instance);
+            _connector.Connect(ConnectionFields.HOST, ConnectionFields.VPN, ConnectionFields.USER, ConnectionFields.PASS, HA_Application.class.getName() + _instance);
             _connector.BindQueues(inputQueueName, inputTopicName, stateQueueName, stateQueueTopic);
         }
 
@@ -121,7 +120,7 @@ public class ClusterFunctionalTest {
 
         // Create a connection to send in test input
         inputSource = new SolaceConnector();
-        inputSource.ConnectSession( HOST, VPN, USER, PASS, "Input",
+        inputSource.ConnectSession( ConnectionFields.HOST, ConnectionFields.VPN, ConnectionFields.USER, ConnectionFields.PASS, "Input",
                 new SessionEventCallback() {
                     public void onEvent(SessionHandle sessionHandle) {}
                 });

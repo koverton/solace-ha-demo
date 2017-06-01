@@ -1,6 +1,6 @@
 package com.solacesystems.demo;
 
-import com.solacesystems.model.ClusteredAppSerializer;
+import com.solacesystems.ha.model.ClusteredAppSerializer;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

@@ -1,4 +1,4 @@
-package com.solacesystems.conn;
+package com.solacesystems.ha.conn;
 
 import com.solacesystems.solclientj.core.*;
 import com.solacesystems.solclientj.core.event.*;

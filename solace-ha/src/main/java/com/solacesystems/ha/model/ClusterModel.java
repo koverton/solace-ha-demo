@@ -1,4 +1,4 @@
-package com.solacesystems.model;
+package com.solacesystems.ha.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

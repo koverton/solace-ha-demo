@@ -1,4 +1,4 @@
-package com.solacesystems.conn;
+package com.solacesystems.ha.conn;
 
 
 import java.nio.ByteBuffer;

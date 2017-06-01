@@ -1,4 +1,4 @@
-package com.solacesystems.model;
+package com.solacesystems.ha.model;
 
 /**
  * Represents the application cluster member state with respect to the input stream sequence.

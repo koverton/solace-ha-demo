@@ -1,6 +1,4 @@
-package com.solacesystems.model;
-
-import com.solacesystems.solclientj.core.handle.MessageHandle;
+package com.solacesystems.ha.model;
 
 import java.nio.ByteBuffer;
 

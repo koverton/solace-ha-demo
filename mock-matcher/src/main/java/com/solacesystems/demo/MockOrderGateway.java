@@ -1,5 +1,5 @@
 package com.solacesystems.demo;
-import com.solacesystems.conn.SolaceConnector;
+import com.solacesystems.ha.conn.SolaceConnector;
 import com.solacesystems.solclientj.core.event.SessionEvent;
 import com.solacesystems.solclientj.core.event.SessionEventCallback;
 import com.solacesystems.solclientj.core.handle.SessionHandle;

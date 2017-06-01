@@ -1,7 +1,7 @@
 package com.solacesystems.demo;
 
-import com.solacesystems.model.HAState;
-import com.solacesystems.model.SeqState;
+import com.solacesystems.ha.model.HAState;
+import com.solacesystems.ha.model.SeqState;
 
 class AppStateHelper {
     static public MatcherState makeAppState(int stackLevels, double par, double incr) {

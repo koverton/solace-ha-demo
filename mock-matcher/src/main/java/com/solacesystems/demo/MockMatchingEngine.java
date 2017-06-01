@@ -1,6 +1,6 @@
 package com.solacesystems.demo;
 
-import com.solacesystems.model.*;
+import com.solacesystems.ha.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

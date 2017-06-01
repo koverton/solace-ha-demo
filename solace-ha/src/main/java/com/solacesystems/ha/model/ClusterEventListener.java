@@ -1,4 +1,4 @@
-package com.solacesystems.model;
+package com.solacesystems.ha.model;
 
 /**
  * A ClusterEventListener is updated by the ClusterModel for every state

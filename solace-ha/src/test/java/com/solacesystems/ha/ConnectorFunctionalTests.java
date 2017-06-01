@@ -1,7 +1,7 @@
-package com.solacesystems;
+package com.solacesystems.ha;
 
-import com.solacesystems.conn.DirectMessageHandler;
-import com.solacesystems.conn.SolaceConnector;
+import com.solacesystems.ha.conn.DirectMessageHandler;
+import com.solacesystems.ha.conn.SolaceConnector;
 import com.solacesystems.solclientj.core.event.FlowEventCallback;
 import com.solacesystems.solclientj.core.event.MessageCallback;
 import com.solacesystems.solclientj.core.event.SessionEventCallback;
@@ -16,7 +16,6 @@ import java.nio.ByteBuffer;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.solacesystems.ConnectionFields.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
@@ -33,7 +32,7 @@ public class ConnectorFunctionalTests {
     @BeforeClass
     public static void setupConnector() {
         _connector = new SolaceConnector();
-        _connector.ConnectSession(HOST, VPN, USER, PASS, ConnectorFunctionalTests.class.getName(),
+        _connector.ConnectSession(ConnectionFields.HOST, ConnectionFields.VPN, ConnectionFields.USER, ConnectionFields.PASS, ConnectorFunctionalTests.class.getName(),
                 new SessionEventCallback() {public void onEvent(SessionHandle sessionHandle) {}});
     }
 

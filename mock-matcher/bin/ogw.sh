@@ -6,6 +6,7 @@ function usage {
 	echo ""
 	exit 1
 }
+op=$1
 
 plat=`uname`
 if [ "Linux" == "$plat" ]; then
@@ -15,25 +16,31 @@ elif [ "Darwin" == "$plat" ]; then
 	solclientlib="../solclientj/osxlib"
 	export DYLD_LIBRARY_PATH=$solclientlib:$DYLD_LIBRARY_PATH
 else
-	echo ""
 	echo "	Unknown platform $plat; exitting"
 	usage
 	exit 1
 fi
 
+# source in environment settings
+. bin/env.sh
+
 if [ "$#" -ne 1 ]; then
 	usage
-elif [ "$1" == "start" ]; then
+
+elif [ "$op" == "start" ]; then
 	echo "starting ..."
 	classpath=target/classes:`mvn dependency:build-classpath | grep repository`
-
-	java -cp $classpath -Djava.library.path=$solclientlib com.solacesystems.demo.MockOrderGateway \
-		192.168.56.151 ha_demo pub pub order/new 1 AAPL > logs/ogw.log &
+	java -cp $classpath -Djava.library.path=$solclientlib \
+		com.solacesystems.demo.MockOrderGateway \
+		$host $vpn ogwuser pass \
+		order/new 1 AAPL > logs/ogw.log &
 	echo $! > logs/ogw.pid
-elif [ "$1" == "stop" ]; then
+
+elif [ "$op" == "stop" ]; then
 	echo "stopping ..."
 	kill `cat logs/ogw.pid`
+
 else
-	echo "	Unknown command: $1"
+	echo "	Unknown command: $op"
 	usage
 fi

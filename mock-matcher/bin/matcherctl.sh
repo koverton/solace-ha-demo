@@ -37,13 +37,16 @@ function matcherctl {
     bin/matcher${inst}.sh $op
 }
 
+# source in environment settings
+. bin/env.sh
+
 if [ "Darwin" == `uname` ]; then
 	tdump_exe=bin/topic_dump.osx
 else
 	tdump_exe=bin/topic_dump.lnx
 fi
 
-$tdump_exe 192.168.56.151 ha_demo huntsman x app1/control/\> | \
+$tdump_exe $host $vpn huntsman x app1/control/\> | \
 	while read -r topic; do 
 		dispatch $topic
 	done

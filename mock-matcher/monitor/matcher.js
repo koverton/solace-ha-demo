@@ -76,14 +76,14 @@ function btnStyle(fld, txt, ttl, clr) {
 }
 function updateCtlButton(record) {
     var id = 'ctl'+record.instance
-    console.log('updateCtlButton: ' + JSON.stringify(record))
     var field = document.getElementById(id)
     if (field == null) {
         console.log('NO SUCH FIELD AS ' + id)
+        return
     }
     field.disabled  = false
     if (record.instance == 'ogw') {
-      
+
       if (record.running) {
         btnStyle(field, 'X', 'Click to Stop', 'red')
       }
@@ -132,7 +132,6 @@ function onDisconnect(topic, payload) {
 }
 
 function onOrderEvent(topic, payload) {
-  console.log('order event')
   if ( topic == 'order/new' ) {
     updateCtlButton({ instance: 'ogw', running: true })
     return true // means 'handled'

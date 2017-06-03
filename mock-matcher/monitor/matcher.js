@@ -69,20 +69,32 @@ function gt0(value) {
   return '-'
 }
 
+function btnStyle(fld, txt, ttl, clr) {
+  fld.innerHTML = txt
+  fld.title = ttl
+  fld.style.backgroundColor = clr
+}
 function updateCtlButton(record) {
     var id = 'ctl'+record.instance
+    console.log('updateCtlButton: ' + JSON.stringify(record))
     var field = document.getElementById(id)
+    if (field == null) {
+        console.log('NO SUCH FIELD AS ' + id)
+    }
     field.disabled  = false
-    if (record.seqStatus == 'Disconnected') {
-        field.innerHTML = 'O'
-        field.title = 'Click to Start'
-        field.style.backgroundColor = 'green'
+    if (record.instance == 'ogw') {
+      
+      if (record.running) {
+        btnStyle(field, 'X', 'Click to Stop', 'red')
+      }
+      else {
+        btnStyle(field, 'O', 'Click to Start', 'green')
+      }
     }
-    else {
-        field.innerHTML = 'X'
-        field.title = 'Click to Stop'
-        field.style.backgroundColor = 'red'
-    }
+    else if (record.seqStatus == 'Disconnected')
+        btnStyle(field, 'O', 'Click to Start', 'green')
+    else
+        btnStyle(field, 'X', 'Click to Stop', 'red')
 }
 
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -
@@ -114,6 +126,15 @@ function onDisconnect(topic, payload) {
     var match = topic.match('[0-9]$')
     if (null != match)
         clearRecord(match[0])
+    return true // means 'handled'
+  }
+  return false // means 'not handled'
+}
+
+function onOrderEvent(topic, payload) {
+  console.log('order event')
+  if ( topic == 'order/new' ) {
+    updateCtlButton({ instance: 'ogw', running: true })
     return true // means 'handled'
   }
   return false // means 'not handled'

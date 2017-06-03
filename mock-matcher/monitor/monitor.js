@@ -5,8 +5,16 @@
 var APPID = 'app1'
 
 //// My local VMR
+//  url  : 'ws://35.184.60.189',
 var vmr_props = {
     url  : 'ws://192.168.56.151',
+    vpn  : 'ha_demo',
+    user : 'monitor',
+    pass : 'monitor'
+}
+//// Google compute VMR
+var google_props = {
+    url  : 'ws://35.184.60.189',
     vpn  : 'ha_demo',
     user : 'monitor',
     pass : 'monitor'
@@ -23,7 +31,8 @@ var ha_topics = {
     active_sub  : 'active_matcher/'  + APPID + '/>',
     standby_sub : 'standby_matcher/' + APPID + '/>',
     trade_sub   : 'trade/'           + APPID + '/>',
-    disconn_sub : '#LOG/INFO/CLIENT/*/CLIENT_CLIENT_DISCONNECT/>'
+    disconn_sub : '#LOG/INFO/CLIENT/*/CLIENT_CLIENT_DISCONNECT/>',
+    order_sub   : 'order/new'
 }
 
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -
@@ -42,6 +51,14 @@ function init() {
 // either starting or stopping of the instance
 function procCtl(instance) {
     var field = document.getElementById('ctl'+instance)
+    var srv = 'matcher'
+    if (instance == 'ogw') {
+      var op = (field.innerHTML == 'X') ? 'stop' : 'start'
+      var topic = APPID + '/control/ogw/' + op + '/1'
+      sendEmpty(topic)
+      updateCtlButton({ instance: 'ogw', running: false })
+      return
+    }
     field.style.backgroundColor = 'gray'
     field.disabled  = true
     field.innerHTML = '-'
@@ -50,8 +67,8 @@ function procCtl(instance) {
     if (rec.seqStatus == 'Disconnected')
         op = 'start'
     else
-        op = 'kill'
-    var topic = APPID + '/control/' + op + '/' + instance
+        op = 'stop'
+    var topic = APPID + '/control/' + srv + '/' + op + '/' + instance
     sendEmpty(topic)
 }
 

@@ -60,19 +60,21 @@ class TestHAApplication implements ClusterEventListener<Integer, Double> {
     public void OnHAStateChange(HAState oldState, HAState newState) {
         System.out.println("From HA State: " + oldState + " to " + newState);
     }
+
     public void OnSeqStateChange(SeqState oldState, SeqState newState) {
         System.out.println("From Sequence State: " + oldState + " to " + newState);
     }
+
     public void OnStateMessage(Double state) {
         System.out.println("State Payload from Peer: " + state);
     }
+
     public Double UpdateApplicationState(Integer input) {
         /**
          * HERE'S THE REAL APPLICATION WORK: ON EACH input, PRODUCE ONE output
          */
         Double output = 1.1 * input;
         System.out.println("PROCESSING: " + input + " => " + output);
-        // TODO: send output to _outputTopic
         _connector.SendOutput(_outputTopic, output);
         return output;
     }

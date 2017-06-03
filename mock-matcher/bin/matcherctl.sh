@@ -6,29 +6,35 @@ function now() {
 }
 
 function dispatch {
-	ts=$(now)
-	echo "$ts topic: $1"
-	# <app> / control / <op: kill | start> / <instance-#>
-	app=`echo $topic | cut -d'/' -f 2`
-	op=`echo $topic | cut -d'/' -f 3`
-	inst=`echo $topic | cut -d'/' -f 4`
-	if [ "kill" == "$op" ]; then
-		killMatcher $inst
-	elif [ "start" == "$op" ]; then
-		startMatcher $inst
-	fi
+    ts=$(now)
+    echo "$ts topic: $1"
+    # <app> / control / <component> / <op: kill | start> / <instance-#>
+    srv=`echo $topic | cut -d'/' -f 3`
+    op=`echo $topic | cut -d'/' -f 4`
+    inst=`echo $topic | cut -d'/' -f 5`
+
+    if [ "ogw" == "$srv" ]; then
+            ogwctl $op
+    elif [ "matcher" == "$srv" ]; then
+            matcherctl $inst $op
+    else
+            echo "Unknown service $srv; ignored"
+    fi
 }
 
-function killMatcher {
-	ts=$(now)
-	echo "$ts bin/matcher$1.sh stop"
-	bin/matcher$1.sh stop
+function ogwctl {
+    op=$1
+    ts=$(now)
+    echo "$ts bin/ogw.sh $op"
+    bin/ogw.sh $op
 }
 
-function startMatcher {
-	ts=$(now)
-	echo "$ts bin/matcher$1.sh start"
-	bin/matcher$1.sh start
+function matcherctl {
+    inst=$1
+    op=$2
+    ts=$(now)
+    echo "$ts bin/matcher${inst}.sh $op"
+    bin/matcher${inst}.sh $op
 }
 
 if [ "Darwin" == `uname` ]; then

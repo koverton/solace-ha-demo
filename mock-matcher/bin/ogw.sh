@@ -1,6 +1,12 @@
 #!/bin/bash
 cd `dirname $0`/..
 
+function usage {
+	echo "	USAGE: $0 [start | stop]"
+	echo ""
+	exit 1
+}
+
 plat=`uname`
 if [ "Linux" == "$plat" ]; then
 	solclientlib="../solclientj/lnxlib"
@@ -11,11 +17,23 @@ elif [ "Darwin" == "$plat" ]; then
 else
 	echo ""
 	echo "	Unknown platform $plat; exitting"
-	echo ""
+	usage
 	exit 1
 fi
 
-classpath=target/classes:`mvn dependency:build-classpath | grep repository`
+if [ "$#" -ne 1 ]; then
+	usage
+elif [ "$1" == "start" ]; then
+	echo "starting ..."
+	classpath=target/classes:`mvn dependency:build-classpath | grep repository`
 
-java -cp $classpath -Djava.library.path=$solclientlib com.solacesystems.demo.MockOrderGateway \
-	192.168.56.151 ha_demo pub pub order/new 1 AAPL
+	java -cp $classpath -Djava.library.path=$solclientlib com.solacesystems.demo.MockOrderGateway \
+		192.168.56.151 ha_demo pub pub order/new 1 AAPL > logs/ogw.log &
+	echo $! > logs/ogw.pid
+elif [ "$1" == "stop" ]; then
+	echo "stopping ..."
+	kill `cat logs/ogw.pid`
+else
+	echo "	Unknown command: $1"
+	usage
+fi

@@ -53,6 +53,9 @@ function session_cb(sess, evt, userobj) {
     // Listen to disconnect/connect events
     topic = solace.SolclientFactory.createTopic(ha_topics.disconn_sub)
     sess.subscribe(topic, true, 'monitor', 3000)
+    // Listen to order events to know when the OGW is online
+    topic = solace.SolclientFactory.createTopic(ha_topics.order_sub)
+    sess.subscribe(topic, true, 'orders', 3000)
   }
   // Reconnect if we've disconnected
   else if (evt.sessionEventCode == solace.SessionEventCode.DISCONNECTED) {
@@ -64,14 +67,19 @@ function session_cb(sess, evt, userobj) {
 // Solace inbound message callback
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 function message_cb(sess, msg, uo, unused) {
-  // UPDATE all displays!
+  // UPDATE all displays
   var payload = msg.getBinaryAttachment()
   var topic   = msg.getDestination().getName()
-  if ( !onDisconnect(topic, payload) ) {
-      if ( !onTrade(topic, payload) ) {
-        if (onMatcherStatus(topic, payload))
-            clearTradeAnnounces()
-      }
+  // punk ass 'chain of responsibility' pattern
+  if ( onOrderEvent(topic, payload) )
+    return
+  if ( onDisconnect(topic, payload) )
+    return
+  if ( onTrade(topic, payload) )
+    return
+  if ( onMatcherStatus(topic, payload) ) {
+    clearTradeAnnounces()
+    return
   }
 }
 

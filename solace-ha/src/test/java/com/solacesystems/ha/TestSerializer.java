@@ -9,8 +9,8 @@ import java.nio.ByteBuffer;
  * This will be by the HA library to convert to/from the underlying transport message formats.
  */
 class TestSerializer implements ClusteredAppSerializer<Integer,Double> {
-    private final ByteBuffer _outbuff = ByteBuffer.allocate(32);
-    private final ByteBuffer _inbuff = ByteBuffer.allocate(32);
+    private final ByteBuffer _outbuff = ByteBuffer.allocate(10);
+    private final ByteBuffer _inbuff = ByteBuffer.allocate(10);
 
     public ByteBuffer SerializeOutput(Double output) {
         _outbuff.clear();

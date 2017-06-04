@@ -13,6 +13,13 @@ class MatcherState {
         _haStatus = HAState.DISCONNECTED;
         _seqStatus = SeqState.INIT;
     }
+    public MatcherState(String appId, int instance, String instrument) {
+        _haStatus = HAState.DISCONNECTED;
+        _seqStatus = SeqState.INIT;
+        _app = appId;
+        _instance = instance;
+        _instrument = instrument;
+    }
 
     public List<Trade> addOrder(ClientOrder order) {
         _lastInput = order.getSequenceId();

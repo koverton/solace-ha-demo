@@ -41,9 +41,9 @@ public class ClusterConnector<InputType, OutputType> {
     //////////            Public Interface                         /////////
     ////////////////////////////////////////////////////////////////////////
 
-    public ClusterConnector(ClusterModel<InputType, OutputType> model,
+    public ClusterConnector(ClusterEventListener<InputType, OutputType> listener,
                             ClusteredAppSerializer<InputType, OutputType> serializer) {
-        _model = model;
+        _model = new ClusterModel<InputType, OutputType>(listener);
         _serializer = serializer;
         _connector = new SolaceConnector();
         initState();
@@ -106,6 +106,8 @@ public class ClusterConnector<InputType, OutputType> {
     }
 
     public SolaceConnector getConnector() { return _connector; }
+
+    public ClusterModel<InputType,OutputType> getModel() { return _model; }
 
     public void SendSerializedOutput(String topic, ByteBuffer output) {
         // Just in case you need to send multiple outputs

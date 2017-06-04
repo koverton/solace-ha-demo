@@ -51,15 +51,11 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         _standbyTopic = standbyTopic;
         // State tracking classes; normally wouldn't include all this stuff, but
         // it's useful in the output monitor to show the complete state of all members
-        _state = new MatcherState();
+        _state = new MatcherState( appId, instance, "AAPL"/* TODO: FIX THIS!! */ );
         _state.setMatcher( new Matcher( 100, 0.25 ) );
-        _state.setApp( appId );
-        _state.setInstance( instance );
-        _state.setInstrument( "AAPL" ); // TODO FIX
         // Underlying cluster model and message-bus connector
         _serializer = new MockMatchingEngineSerializer();
-        _model = new ClusterModel<ClientOrder, MatcherState>( this );
-        _connector = new ClusterConnector<ClientOrder, MatcherState>( _model, _serializer);
+        _connector = new ClusterConnector<ClientOrder, MatcherState>( this, _serializer);
     }
 
     public void Connect(String host, String vpn, String user, String pass) {
@@ -104,18 +100,27 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         // this is the latest output from the ACTIVE member, so we should update our
         // Matching Engine state with this data to keep in sync
         if (state != null) {
-            _state.setHAStatus( _model.GetHAStatus() );
-            _state.setSeqStatus( _model.GetSequenceStatus() );
+            // This is the real application work, tracking state
+            _state.setMatcher( state.getMatcher() );
+            // This is an extra bit added for the demo so we can externalize the whole
+            // HA state for visualization outside the app
+            _state.setHAStatus( _connector.getModel().GetHAStatus() );
+            _state.setSeqStatus( _connector.getModel().GetSequenceStatus() );
             _state.setLastInput( state.getLastInput() );
             _state.setLastOutput( state.getLastInput() );
-            _state.setMatcher( state.getMatcher() );
         }
         sendMonitorUpdate();
     }
 
+    /**
+     * Not strictly needed for the real-world HA app, this is an extra bit I added to better
+     * externalize/visualize the application state when in BACKUP mode. BACKUPs don't need to
+     * send any output.
+     */
     private void sendMonitorUpdate() {
-        if (_model.GetHAStatus() != HAState.DISCONNECTED) {
-            logger.debug("Sending monitor update with HA Status {}", _model.GetHAStatus());
+        HAState current = _connector.getModel().GetHAStatus();
+        if (current != HAState.DISCONNECTED) {
+            logger.debug("Sending monitor update with HA Status {}", current);
             _connector.SendOutput(_activeTopic, _state);
             _connector.SendSerializedOutput(_standbyTopic, _serializer.SerializeOutput(_state));
         }
@@ -131,7 +136,6 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         }
     }
 
-    private final ClusterModel<ClientOrder,MatcherState> _model;
     private final ClusterConnector<ClientOrder,MatcherState> _connector;
     private final MockMatchingEngineSerializer _serializer;
     private final MatcherState _state;

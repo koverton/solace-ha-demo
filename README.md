@@ -228,7 +228,6 @@ class TestHAApplication implements ClusterEventListener<Integer, Double> {
 
 class TestSerializer implements ClusteredAppSerializer<Integer,Double> {
     private final ByteBuffer _outbuff = ByteBuffer.allocate(10);
-    private final ByteBuffer _inbuff = ByteBuffer.allocate(10);
 
     public ByteBuffer SerializeOutput(Double output) {
         _outbuff.clear();

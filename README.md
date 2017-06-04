@@ -168,6 +168,9 @@ wasn't added to the interface.
 
 ## Putting It All Together
 
+A simple HA application with clustering capability where the cluster 
+receives an input Integer and produces and output Double.
+
 ```` Java
 class TestHAApplication implements ClusterEventListener<Integer, Double> {
     private ClusterConnector<Integer,Double> _connector;

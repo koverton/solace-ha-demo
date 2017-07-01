@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.vertical{
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+  font-family: sans-serif;
+  font-weight: normal;
+  color:#666;
+}
+.standard{
+  font-family: sans-serif;
+  font-weight: normal;
+  color:#666;
+  padding-left: 20px;
+}
+.theader{
+  font-family: sans-serif;
+  font-weight: normal;
+  color:#666;
+}
+.buy {
+  font-family: sans-serif;
+  font-weight: normal;
+  color:  white;
+  background-color: green;
+  text-align: right;
+  padding-right: 30px;
+}
+.sell {
+  font-family: sans-serif;
+  font-weight: normal;
+  color: white;
+  background-color: red;
+  text-align: right;
+  padding-right: 30px;
+}
+.price {
+  font-family: sans-serif;
+  font-weight: normal;
+  color:#666;
+  text-align: right;
+  padding-right: 30px;
+}
+.active {
+  font-family: sans-serif;
+  font-weight: normal;
+  color:  white;
+  background-color: green;
+  padding-left: 20px;
+}
+.backup {
+  font-family: sans-serif;
+  font-weight: normal;
+  color:  white;
+  background-color: gray;
+  padding-left: 20px;
+}
+.transitory {
+  font-family: sans-serif;
+  font-weight: bold;
+  color:  red;
+  background-color: yellow;
+  padding-left: 20px;
+}
+.button {
+  border: none;
+  border-radius: 4px;
+}
+</style>
+
+<script src="./solclient.js"></script>
+<script src="./connector.js"></script>
+<script src="./rest.js"></script>
+
+<body bgcolor='black' fgcolor='white' onload="initRest()">
+
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<!--          REST EXAMPLE                             -->
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<H1 class=standard align=center>REST Sample</H1>
+<p align=center class=standard>
+Send a message to the rest backend: 
+<input id="ctlrest" value="hiya!"> 
+<button id="restctl" onclick="procCtl('rest')" class="button">0</button> 
+&nbsp; 
+</p>
+<p align=center class=standard>
+<div class=standard align=center id="rest_response"></div>
+</p>
+
+</body>
+</html>

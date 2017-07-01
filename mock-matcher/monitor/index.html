@@ -89,6 +89,13 @@
   <TR><!-- TOP ROW -->
     <TD colspan=3><H1 class=standard align=center>HA Cluster Demo</H1></TD>
   </TR>
+  <TR>
+    <TD></TD>
+    <TD class="standard" colspan=2>
+      &nbsp;<button id="ctlogw" onclick="procCtl('ogw');" class="button">0</button> &nbsp;Mock Order Gateway<br>
+      <div align=center id="ogw_in"></div>
+    </TD>
+  </TR>
   <TR><!-- HEADER ROW -->
     <td width=110></td>
     <TD width=110 class="theader" align=left>
@@ -118,12 +125,7 @@
     <TD width=110 class="standard" id=lastOutput1></TD>
     <TD width=110 class="standard" id=lastOutput2></TD>
     </TR><!-- OGW CTL ROW -->
-  <TR>
-    <TD></TD>
-    <TD class="standard" colspan=2>
-      &nbsp;<button id="ctlogw" onclick="procCtl('ogw');" class="button">O</button> &nbsp;Mock Order Gateway
-    </TD>
-  </TR><!-- TRADE ANNOUNCEMENTS ROW -->
+  <!-- TRADE ANNOUNCEMENTS ROW -->
   <TR id="trade_announce">
     <TD class="standard" colspan=3></TD>
   </TR>

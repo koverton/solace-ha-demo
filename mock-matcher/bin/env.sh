@@ -2,16 +2,16 @@
 # sourced by other scripts
 
 ## My local VMR
-host=192.168.56.151
-vpn=ha_demo
-user=appuser
-pass=nothing
+# host=192.168.56.151
+# vpn=ha_demo
+# user=appuser
+# pass=nothing
 
 ## Google compute VMR
-# host=35.184.60.189
-# vpn=ha_demo
-# user=googleuser
-# pass=nothing
+host=10.128.0.2
+vpn=ha_demo
+user=googleuser
+pass=nothing
 
 ## My DataGo Service
 # host=msgvpn-3419.messaging.datago.io:20131

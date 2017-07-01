@@ -14,7 +14,7 @@ var vmr_props = {
 }
 //// Google compute VMR
 var google_props = {
-    url  : 'ws://35.184.60.189',
+    url  : 'ws://104.155.140.201',
     vpn  : 'ha_demo',
     user : 'monitor',
     pass : 'monitor'
@@ -43,20 +43,27 @@ var ha_topics = {
 function init() {
   initMatcher()
   initLadder()
-  initSolaceConn(vmr_props, ha_topics)
+  initSolaceConn(google_props, ha_topics)
 }
 
 // Invoked by various buttons for each instance;
 // depending on the current record state may request
 // either starting or stopping of the instance
 function procCtl(instance) {
-    var field = document.getElementById('ctl'+instance)
+    var fldname = 'ctl' + instance
+console.log('HI THERE EVERYBODY: ' + fldname)
+    var field = document.getElementById(fldname)
     var srv = 'matcher'
     if (instance == 'ogw') {
       var op = (field.innerHTML == 'X') ? 'stop' : 'start'
       var topic = APPID + '/control/ogw/' + op + '/1'
       sendEmpty(topic)
       updateCtlButton({ instance: 'ogw', running: false })
+      return
+    }
+    else if (instance == 'rest') {
+      var sendvalue = field.value
+      sendRequest(APPID + '/control/rest', APPID + '/response/rest', sendvalue)
       return
     }
     field.style.backgroundColor = 'gray'

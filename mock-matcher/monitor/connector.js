@@ -42,20 +42,30 @@ function session_cb(sess, evt, userobj) {
   // Wait until the session is UP before subscribing
   if (evt.sessionEventCode == solace.SessionEventCode.UP_NOTICE) {
     // Listen to updates from the active process
-    var topic = solace.SolclientFactory.createTopic(ha_topics.active_sub)
-    sess.subscribe(topic, true, 'active', 3000)
+    if (ha_topics.active_sub != null) {
+      var topic = solace.SolclientFactory.createTopic(ha_topics.active_sub)
+      sess.subscribe(topic, true, 'active', 3000)
+    }
     // Listen to updates from the standby process
-    topic = solace.SolclientFactory.createTopic(ha_topics.standby_sub)
-    sess.subscribe(topic, true, 'standby', 3000)
+    if (ha_topics.standby_sub != null) {
+      topic = solace.SolclientFactory.createTopic(ha_topics.standby_sub)
+      sess.subscribe(topic, true, 'standby', 3000)
+    }
     // Listen for trade announcements from the active matcher
-    topic = solace.SolclientFactory.createTopic(ha_topics.trade_sub)
-    sess.subscribe(topic, true, 'trades', 3000)
+    if (ha_topics.trade_sub != null) {
+      topic = solace.SolclientFactory.createTopic(ha_topics.trade_sub)
+      sess.subscribe(topic, true, 'trades', 3000)
+    }
     // Listen to disconnect/connect events
-    topic = solace.SolclientFactory.createTopic(ha_topics.disconn_sub)
-    sess.subscribe(topic, true, 'monitor', 3000)
+    if (ha_topics.disconn_sub != null) {
+      topic = solace.SolclientFactory.createTopic(ha_topics.disconn_sub)
+      sess.subscribe(topic, true, 'monitor', 3000)
+    }
     // Listen to order events to know when the OGW is online
-    topic = solace.SolclientFactory.createTopic(ha_topics.order_sub)
-    sess.subscribe(topic, true, 'orders', 3000)
+    if (ha_topics.order_sub != null) {
+      topic = solace.SolclientFactory.createTopic(ha_topics.order_sub)
+      sess.subscribe(topic, true, 'orders', 3000)
+    }
   }
   // Reconnect if we've disconnected
   else if (evt.sessionEventCode == solace.SessionEventCode.DISCONNECTED) {
@@ -81,6 +91,32 @@ function message_cb(sess, msg, uo, unused) {
     clearTradeAnnounces()
     return
   }
+}
+
+function send(topic, data) {
+    var msg = solace.SolclientFactory.createMessage()
+    msg.setDestination(solace.SolclientFactory.createTopic(topic))
+    msg.setDeliveryMode(solace.MessageDeliveryModeType.DIRECT)
+    msg.setBinaryAttachment(data)
+    try {
+        sess.send(msg)
+    } catch (err) {
+        console.log('Failed to send message: ' + msg.toString())
+        console.log(err.toString() + err.Message)
+    }
+}
+
+function sendRequest(topic, data, replyFunc, failFunc) {
+    var msg = solace.SolclientFactory.createMessage()
+    msg.setDestination(solace.SolclientFactory.createTopic(topic))
+    msg.setDeliveryMode(solace.MessageDeliveryModeType.DIRECT)
+    msg.setBinaryAttachment(data)
+    try {
+        sess.sendRequest(msg, 2000, replyFunc, failFunc, null)
+    } catch (err) {
+        console.log('Failed to send message')
+        console.log(err.toString() + err.Message)
+    }
 }
 
 function sendEmpty(topic) {

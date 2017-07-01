@@ -83,12 +83,12 @@ function updateCtlButton(record) {
     }
     field.disabled  = false
     if (record.instance == 'ogw') {
-
       if (record.running) {
         btnStyle(field, 'X', 'Click to Stop', 'red')
       }
       else {
         btnStyle(field, 'O', 'Click to Start', 'green')
+        document.getElementById('ogw_in').innerHTML = '' // &darr;
       }
     }
     else if (record.seqStatus == 'Disconnected')
@@ -134,6 +134,7 @@ function onDisconnect(topic, payload) {
 function onOrderEvent(topic, payload) {
   if ( topic == 'order/new' ) {
     updateCtlButton({ instance: 'ogw', running: true })
+    document.getElementById('ogw_in').innerHTML = '&darr;'
     return true // means 'handled'
   }
   return false // means 'not handled'

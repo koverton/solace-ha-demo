@@ -166,4 +166,83 @@ probably want to implement one anyway for writing unit tests, test harnesses,
 drivers, etc. Since the `ClusterConnector` didn't actually require it, it 
 wasn't added to the interface.
 
+## Putting It All Together
+
+A simple HA application with clustering capability where the cluster 
+receives an input Integer and produces and output Double.
+
+```` Java
+class TestHAApplication implements ClusterEventListener<Integer, Double> {
+    private ClusterConnector<Integer,Double> _connector;
+    private Integer _lastInput;
+    private Double  _lastOutput;
+    private int     _instance;
+    private String  _outputTopic;
+    private String  _stateQueue;
+
+    public TestHAApplication(int instance, String outputTopic) {
+        _instance    = instance;
+        _outputTopic = outputTopic;
+
+        _connector   = new ClusterConnector<Integer, Double>(this, new TestSerializer());
+    }
+
+    public void Start(String inputQueueName, String inputTopicName, String stateQueueName, String stateQueueTopic) {
+        _stateQueue = stateQueueName;
+        _connector.Connect(ConnectionFields.HOST,
+                ConnectionFields.VPN,
+                ConnectionFields.USER,
+                ConnectionFields.PASS,
+                "SampleApp" + _instance);
+        _connector.BindQueues(inputQueueName, inputTopicName, stateQueueName, stateQueueTopic);
+    }
+
+    /** EVENT HANDLING  **/
+    public void OnHAStateChange(HAState oldState, HAState newState) {
+        System.out.println("From HA State: " + oldState + " to " + newState);
+    }
+
+    public void OnSeqStateChange(SeqState oldState, SeqState newState) {
+        System.out.println("From Sequence State: " + oldState + " to " + newState);
+    }
+
+    public void OnStateMessage(Double state) {
+        /**
+         * HERE'S THE BACKUP APP'S JOB: track output from the ACTIVE member
+         */
+        System.out.println("State Payload from Peer: " + state);
+        _lastOutput = state;
+    }
+
+    public Double UpdateApplicationState(Integer input) {
+        /**
+         * HERE'S THE REAL APPLICATION WORK: for each Innput, produce an output
+         */
+        _lastInput = input;
+        _lastOutput = 1.1 * _lastInput;
+        System.out.println("PROCESSING: " + _lastInput + " => " + _lastOutput);
+        _connector.SendOutput(_outputTopic, _lastOutput);
+        return _lastOutput;
+    }
+}
+
+class TestSerializer implements ClusteredAppSerializer<Integer,Double> {
+    private final ByteBuffer _outbuff = ByteBuffer.allocate(10);
+
+    public ByteBuffer SerializeOutput(Double output) {
+        _outbuff.clear();
+        _outbuff.putDouble(output);
+        return _outbuff;
+    }
+
+    public Double DeserializeOutput(ByteBuffer msg) {
+        return msg.getDouble();
+    }
+
+    public Integer DeserializeInput(ByteBuffer msg) {
+        return msg.getInt();
+    }
+}
+
+````
 

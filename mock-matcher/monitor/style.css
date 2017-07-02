@@ -13,6 +13,10 @@ body{
 h1 {
   text-align: center;
 }
+.trade{
+  color: yellow;
+  text-align: right;
+}
 .standard{
   font-family: sans-serif;
   font-weight: normal;

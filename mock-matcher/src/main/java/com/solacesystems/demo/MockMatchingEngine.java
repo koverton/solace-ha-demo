@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherState> {
     private static final Logger logger = LoggerFactory.getLogger(MockMatchingEngine.class);
@@ -56,6 +58,15 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         // Underlying cluster model and message-bus connector
         _serializer = new MockMatchingEngineSerializer();
         _connector = new ClusterConnector<ClientOrder, MatcherState>( this, _serializer);
+
+        _timer = new Timer();
+        _lastTs = System.currentTimeMillis();
+        _timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                periodicStatusUpdate();
+            }
+        }, 1000, 1000);
     }
 
     public void Connect(String host, String vpn, String user, String pass) {
@@ -124,6 +135,7 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
             _connector.SendOutput(_activeTopic, _state);
             _connector.SendSerializedOutput(_standbyTopic, _serializer.SerializeOutput(_state));
         }
+        _lastTs = System.currentTimeMillis();
     }
 
     private void sendTradeAnnouncements(List<Trade> trades) {
@@ -136,6 +148,14 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         }
     }
 
+    private void periodicStatusUpdate() {
+        long newTs = System.currentTimeMillis();
+        if (999 < (newTs - _lastTs))
+            sendMonitorUpdate();
+        else
+            _lastTs = newTs;
+    }
+
     private final ClusterConnector<ClientOrder,MatcherState> _connector;
     private final MockMatchingEngineSerializer _serializer;
     private final MatcherState _state;
@@ -145,4 +165,7 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
     private final String _activeTopic;
     private final String _standbyTopic;
     private final String _stateTopic;
+
+    private final Timer _timer;
+    private long _lastTs;
 }

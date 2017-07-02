@@ -89,8 +89,11 @@ public class JSONFnTest {
         final AtomicInteger received = new AtomicInteger(0);
 
         SolaceConnector conn = new SolaceConnector();
-        conn.ConnectSession("192.168.56.151", "ha_demo",
-                "foo", "foo", "whatever",
+        conn.ConnectSession(ConnectionFields.HOST,
+                ConnectionFields.VPN,
+                ConnectionFields.USER,
+                ConnectionFields.PASS,
+                "whatever",
                 new SessionEventCallback() {
                     public void onEvent(SessionHandle sessionHandle) {}
                 });

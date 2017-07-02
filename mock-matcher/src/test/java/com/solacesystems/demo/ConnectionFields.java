@@ -1,4 +1,4 @@
-package com.solacesystems.ha;
+package com.solacesystems.demo;
 
 /**
  * UPDATE THESE AS NEEDED FOR YOUR FN-TEST ENVIRONMENT.

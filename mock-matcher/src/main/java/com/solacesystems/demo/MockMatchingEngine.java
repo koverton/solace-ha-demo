@@ -129,13 +129,15 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
      * send any output.
      */
     private void sendMonitorUpdate() {
-        HAState current = _connector.getModel().GetHAStatus();
-        if (current != HAState.DISCONNECTED) {
-            logger.debug("Sending monitor update with HA Status {}", current);
-            _connector.SendOutput(_activeTopic, _state);
-            _connector.SendSerializedOutput(_standbyTopic, _serializer.SerializeOutput(_state));
+        if (_connector != null && _connector.getModel() != null) {
+            HAState current = _connector.getModel().GetHAStatus();
+            if (current != HAState.DISCONNECTED) {
+                logger.debug("Sending monitor update with HA Status {}", current);
+                _connector.SendOutput(_activeTopic, _state);
+                _connector.SendSerializedOutput(_standbyTopic, _serializer.SerializeOutput(_state));
+            }
+            _lastTs = System.currentTimeMillis();
         }
-        _lastTs = System.currentTimeMillis();
     }
 
     private void sendTradeAnnouncements(List<Trade> trades) {

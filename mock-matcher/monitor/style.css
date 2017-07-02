@@ -14,7 +14,7 @@ h1 {
   text-align: center;
 }
 .trade{
-  color: yellow;
+  color: #fffd8c;
   text-align: right;
 }
 .standard{
@@ -69,7 +69,7 @@ h1 {
   font-family: sans-serif;
   font-weight: bold;
   color:  red;
-  background-color: yellow;
+  background-color: #fffd8c;
   padding-left: 20px;
 }
 .button {

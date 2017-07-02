@@ -51,7 +51,6 @@ function init() {
 // either starting or stopping of the instance
 function procCtl(instance) {
     var fldname = 'ctl' + instance
-console.log('HI THERE EVERYBODY: ' + fldname)
     var field = document.getElementById(fldname)
     var srv = 'matcher'
     if (instance == 'ogw') {

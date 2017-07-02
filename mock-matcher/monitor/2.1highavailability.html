@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<script src="./solclient.js"></script>
+<script src="./connector.js"></script>
+<script src="./monitor.js"></script>
+<script src="./matcher.js"></script>
+<script src="./trades.js"></script>
+<!--
+<script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
+<script src="./hypergrid-ladder.js"></script>
+-->
+<script src="./html-ladder.js"></script>
+</head>
+
+<body onload="init()">
+
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<!--          MONITOR DISPLAY                          -->
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<TABLE align=center>
+  <tr><!-- TOP ROW -->
+    <td colspan=3>
+      <H1>HA Cluster Demo</H1>
+    <td>
+  </tr>
+  <tr>
+  <td colspan=3>
+    <p>
+    Matching Engines are a nice example for this library because they don't just 
+    require fault tolerance they require state management. For example, let's say the 
+    Primary instance assembled an OrderBook of 5 orders. If the Primary fails, it is 
+    not enough to simply provide a 
+    <a href="https://en.wikipedia.org/wiki/Leader_election">Leader Election</a> 
+    process for detecting the failure and selecting a new leader from the Backups. 
+    The new leader must synchronize itself with the state of the last OrderBook at the 
+    time the previous leader failed.
+    </p>
+    <p align=right>
+      <a href="2.2startinstances.html">Show Me An Example</a>
+    </p>
+  </td>
+  </tr>
+</TABLE>
+
+</body>
+</html>

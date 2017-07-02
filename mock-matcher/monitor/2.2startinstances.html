@@ -1,0 +1,79 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<script src="./solclient.js"></script>
+<script src="./connector.js"></script>
+<script src="./monitor.js"></script>
+<script src="./matcher.js"></script>
+<script src="./trades.js"></script>
+<!--
+<script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
+<script src="./hypergrid-ladder.js"></script>
+-->
+<script src="./html-ladder.js"></script>
+</head>
+
+<body onload="init()">
+
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<!--          MONITOR DISPLAY                          -->
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<H1>HA Cluster Demo</H1>
+<TABLE id=grid align=center>
+
+<tr><td colspan=3>
+<p >
+Click <button id="dummy" class=onbutton>O</button> to start an instance of the Matching Engine.
+</p>
+<p >
+Click <button id="dummy" class=offbutton>X</button> to stop it.
+</p>
+</td></tr>
+  <tr><!-- HEADER ROW -->
+    <td width=110></td>
+    <td width=110 class="theader" align=left>
+      &nbsp;<button id="ctl1" onclick="procCtl(1);" class="button">X</button> &nbsp;Instance 1
+    </td>
+    <td width=110 class="theader" align=right>
+      Instance 2 &nbsp;<button id="ctl2" onclick="procCtl(2);" class="button">X</button>&nbsp;
+    </td>
+  </tr>
+  <tr><!-- HA STATUS ROW -->
+    <td width=110 class="standard" align=right>HA Status:</td>
+    <td width=110 class="standard" id=haStatus1></td>
+    <td width=110 class="standard" id=haStatus2></td>
+  </tr>
+  <tr><!-- SEQUENCE STATUS ROW -->
+    <td width=110 class="standard" align=right>Seq Status:</td>
+    <td width=110 class="standard" id=seqStatus1></td>
+    <td width=110 class="standard" id=seqStatus2></td>
+  </tr>
+  <tr><!-- LAST INPUT ROW -->
+    <td width=110 class="standard" align=right>Last Input:</td>
+    <td width=110 class="standard" id=lastInput1></td>
+    <td width=110 class="standard" id=lastInput2></td>
+  </tr>
+  <tr><!-- LAST OUTPUT ROW -->
+    <td width=110 class="standard" align=right>Last Output:</td>
+    <td width=110 class="standard" id=lastOutput1></td>
+    <td width=110 class="standard" id=lastOutput2></td>
+  </tr>
+</TABLE>
+<p >
+The first instance to start becomes the ACTIVE member, any other instance becomes BACKUP.
+</p>
+<p >
+If you stop the ACTIVE member, the BACKUP changes state to ACTIVE. 
+</p>
+<p >
+Go ahead and fail them back and forth a couple times.
+</p>
+
+<p align=right>
+<a href="monitor.html">Next Step: Add an Input Stream</a>
+</p>
+
+
+</body>
+</html>

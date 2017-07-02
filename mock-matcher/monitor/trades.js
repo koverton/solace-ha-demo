@@ -27,6 +27,8 @@ function announceTrade(trade) {
 
 function clearTradeAnnounces() {
     var table = document.getElementById("grid")
-    table.rows.namedItem('trade_announce').cells[0].innerHTML = ''
+    var tradeRow = table.rows.namedItem('trade_announce')
+    if (tradeRow != null) 
+        tradeRow.cells[0].innerHTML = ''
 }
 

@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="style.css">
 <script src="./solclient.js"></script>
@@ -11,20 +12,18 @@
 <script src="./hypergrid-ladder.js"></script>
 -->
 <script src="./html-ladder.js"></script>
-
-<body bgcolor='black' fgcolor='white' onload="init()">
+</head>
+<body onload="init()">
 
 <!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
 <!--          MONITOR DISPLAY                          -->
 <!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
 <TABLE id=grid align=center>
   <TR><!-- TOP ROW -->
-    <TD colspan=3><H1 class=standard align=center>HA Cluster Demo</H1></TD>
-  </TR>
-  <TR>
-    <TD></TD>
-    <TD class="standard" colspan=2>
-      &nbsp;<button id="ctlogw" onclick="procCtl('ogw');" class="button">0</button> &nbsp;Mock Order Gateway<br>
+    <TD colspan=3>
+      <H1>HA Cluster Demo</H1>
+      <p align=center>Click 
+      &nbsp;<button id="ctlogw" onclick="procCtl('ogw');" class="button">0</button> &nbsp;to send orders<br>
       <div align=center id="ogw_in"></div>
     </TD>
   </TR>

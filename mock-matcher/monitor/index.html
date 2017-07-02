@@ -1,70 +1,37 @@
-<!DOCTYPE html>
+<html>
 <meta charset="utf-8">
+<head>
 <link rel="stylesheet" href="style.css">
-<script src="./solclient.js"></script>
-<script src="./connector.js"></script>
-<script src="./monitor.js"></script>
-<script src="./matcher.js"></script>
-<script src="./trades.js"></script>
-<!--
-<script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
-<script src="./hypergrid-ladder.js"></script>
--->
-<script src="./html-ladder.js"></script>
+</head>
+<body>
 
-<body bgcolor='black' fgcolor='white' onload="init()">
+<H1>HA Cluster Demo</H1>
 
-<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
-<!--          MONITOR DISPLAY                          -->
-<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
-<TABLE id=grid align=center>
-  <TR><!-- TOP ROW -->
-    <TD colspan=3><H1 class=standard align=center>HA Cluster Demo</H1></TD>
-  </TR>
-  <TR>
-    <TD></TD>
-    <TD class="standard" colspan=2>
-      &nbsp;<button id="ctlogw" onclick="procCtl('ogw');" class="button">0</button> &nbsp;Mock Order Gateway<br>
-      <div align=center id="ogw_in"></div>
-    </TD>
-  </TR>
-  <TR><!-- HEADER ROW -->
-    <td width=110></td>
-    <TD width=110 class="theader" align=left>
-      &nbsp;<button id="ctl1" onclick="procCtl(1);" class="button">X</button> &nbsp;Instance 1
-    </TD>
-    <TD width=110 class="theader" align=right>
-      Instance 2 &nbsp;<button id="ctl2" onclick="procCtl(2);" class="button">X</button>&nbsp;
-    </TD>
-  </TR>
-  <TR><!-- HA STATUS ROW -->
-    <TD width=110 class="standard" align=right>HA Status:</TD>
-    <TD width=110 class="standard" id=haStatus1></TD>
-    <TD width=110 class="standard" id=haStatus2></TD>
-  </TR>
-  <TR><!-- SEQUENCE STATUS ROW -->
-    <TD width=110 class="standard" align=right>Seq Status:</TD>
-    <TD width=110 class="standard" id=seqStatus1></TD>
-    <TD width=110 class="standard" id=seqStatus2></TD>
-  </TR>
-  <TR><!-- LAST INPUT ROW -->
-    <TD width=110 class="standard" align=right>Last Input:</TD>
-    <TD width=110 class="standard" id=lastInput1></TD>
-    <TD width=110 class="standard" id=lastInput2></TD>
-  </TR>
-  <TR><!-- LAST OUTPUT ROW -->
-    <TD width=110 class="standard" align=right>Last Output:</TD>
-    <TD width=110 class="standard" id=lastOutput1></TD>
-    <TD width=110 class="standard" id=lastOutput2></TD>
-    </TR><!-- OGW CTL ROW -->
-  <!-- TRADE ANNOUNCEMENTS ROW -->
-  <TR id="trade_announce">
-    <TD class="standard" colspan=3></TD>
-  </TR>
-  <TR><!-- DYNAMIC PRICE LADDER STARTING ROW -->
-    <td></td><TD class="standard" colspan=2><div id="ladder"></div></TD>
-  </TR>
-</TABLE>
+<p>
+This is a demonstration of the 
+<a href="https://github.com/koverton/solace-ha-demo">solace-ha clustering library</a>
+which provides stateful message-driven applications with fault
+tolerance. This library handles all the state transitions from startup, to
+backup, to active, etc. providing applications with a simple event-driven
+interface for all important events.
+</p>
+
+<p>
+To demonstrate the capabilities enabled by this library, I've created a sample 
+Mock <a href="https://en.wikipedia.org/wiki/Order_matching_system">Order Matching Engine</a> that can be deployed in fault tolerant clusters of instances. These instances 
+use this HA library to:
+<ol>
+<li> Signal to the instances when they are acting as Primary or Backup;
+<li> Synchronize their state with the other instances at all times.
+</ol>
+</p>
+
+<p>
+Next: 
+<a href="1.1whatsamatchingengine.html">What the hell is an Order Matching Engine?</a>
+ | 
+<a href="2.1highavailability.html">Cut to the chase, what's next? </a>
+</p>
 
 </body>
 </html>

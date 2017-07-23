@@ -17,6 +17,8 @@
     </p><p>
     For example, let's say the Primary instance assembled an OrderBook of 5 orders. 
     </p><p>
+    <img src=stateful-ha.gif>
+    </p><p>
     If the Primary fails, the new leader must synchronize itself with the state 
     of the last OrderBook at the time the previous leader failed.
     </p><p>

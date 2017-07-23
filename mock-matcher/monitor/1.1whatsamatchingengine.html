@@ -7,6 +7,7 @@
 
 <H1>HA Cluster Demo</H1>
 
+<div>
 <p>
 An 
 <a href="https://en.wikipedia.org/wiki/Order_matching_system">Order Matching Engine</a> 
@@ -20,19 +21,30 @@ a TRADE.
 Because buyers typically bid low and sellers typicall bid high, the collection of 
 outstanding orders is often organized into a MARKET STACK with separate columns 
 for all BUY and SELL orders in price order. For example:
+</p>
 
+<p>
 <TABLE id=grid align=center>
-<tbody>
-  <tr><!-- DYNAMIC PRICE LADDER STARTING ROW -->
-    <td></td><td class="standard" colspan="2"><div id="ladder"></div></td>
-  </tr>
-<tr id="101.25"><td class=""></td><td class="price">101.25</td><td class="sell"></td></tr><tr id="101"><td class=""></td><td class="price">101.00</td><td class="sell"></td></tr><tr id="100.75"><td class=""></td><td class="price">100.75</td><td class="sell"></td></tr><tr id="100.5"><td class=""></td><td class="price">100.50</td><td class="sell">2865.46</td></tr><tr id="100.25"><td class=""></td><td class="price">100.25</td><td class="sell">2885.33</td></tr><tr id="100"><td class="buy">480.54</td><td class="price">100.00</td><td class="sell"></td></tr><tr id="99.75"><td class="buy">747.33</td><td class="price">99.75</td><td class=""></td></tr><tr id="99.5"><td class="buy">3824.14</td><td class="price">99.50</td><td class=""></td></tr><tr id="99.25"><td class="buy"></td><td class="price">99.25</td><td class=""></td></tr><tr id="99"><td class="buy"></td><td class="price">99.00</td><td class=""></td></tr><tr id="98.75"><td class="buy"></td><td class="price">98.75</td><td class=""></td></tr></tbody>
+ <tbody>
+  <tr><td></td>                    <td class="price">101.25</td>  <td class="sell"></td></tr>
+  <tr><td></td>                    <td class="price">101.00</td>  <td class="sell"></td></tr>
+  <tr><td></td>                    <td class="price">100.75</td>  <td class="sell"></td></tr>
+  <tr><td></td>                    <td class="price">100.50</td>  <td class="sell">2865.46</td></tr>
+  <tr><td></td>                    <td class="price">100.25</td>  <td class="sell">2885.33</td></tr>
+  <tr><td class="buy"> 480.54</td> <td class="price">100.00</td>  <td></td></tr>
+  <tr><td class="buy"> 747.33</td> <td class="price"> 99.75</td>  <td></td></tr>
+  <tr><td class="buy">3824.14</td> <td class="price"> 99.50</td>  <td></td></tr>
+  <tr><td class="buy"></td>        <td class="price"> 99.25</td>  <td></td></tr>
+  <tr><td class="buy"></td>        <td class="price"> 99.00</td>  <td></td></tr>
+  <tr><td class="buy"></td>        <td class="price"> 98.75</td>  <td></td></tr>
+ </tbody>
 </TABLE>
 </p>
 
 <p align=right>
 <a href="2.1highavailability.html">OK got it.<br>Continue.</a>
 </p>
+</div>
 
 </body>
 </html>

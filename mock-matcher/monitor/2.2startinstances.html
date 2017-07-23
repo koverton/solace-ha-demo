@@ -14,14 +14,16 @@
 <!--          MONITOR DISPLAY                          -->
 <!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
 <H1>HA Cluster Demo</H1>
-<TABLE id=grid align=center>
 
+<div>
+<TABLE id=grid align=center>
 <tr><td colspan=3>
 <p >
-Click <button id="dummy" class=onbutton>O</button> to start an instance of the Matching Engine.
+Click <button id="dummy" class=onbutton>O</button> to start instances of the Matching Engine.
 </p>
 <p >
-Click <button id="dummy" class=offbutton>X</button> to stop it.
+Click <button id="dummy" class=offbutton>X</button> to stop them after they're running.
+<br><br>
 </p>
 </td></tr>
   <tr><!-- HEADER ROW -->
@@ -54,19 +56,20 @@ Click <button id="dummy" class=offbutton>X</button> to stop it.
     <td width=110 class="standard" id=lastOutput2></td>
   </tr>
 </TABLE>
-<p >
+<p>
 The first instance to start becomes the ACTIVE member, any other instance becomes BACKUP.
 </p>
-<p >
+<p>
 If you stop the ACTIVE member, the BACKUP changes state to ACTIVE. 
 </p>
-<p >
+<p>
 Go ahead and fail them back and forth a couple times.
 </p>
 
 <p align=right>
 <a href="monitor.html">Next Step: Add an Input Stream</a>
 </p>
+</div>
 
 
 </body>

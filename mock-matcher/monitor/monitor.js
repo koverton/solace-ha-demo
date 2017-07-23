@@ -42,7 +42,8 @@ var ha_topics = {
 //// Invoked by html->body:onload
 function init() {
   initMatcher()
-  initLadder()
+  if (typeof(initTrades) === 'function') initTrades()
+  if (typeof(initLadder) === 'function') initLadder()
   initSolaceConn(google_props, ha_topics)
 }
 

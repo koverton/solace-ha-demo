@@ -3,16 +3,22 @@
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 var APPID       = 'app1'
 
+function initTrades() {
+  addMsgHandler(onTrade)
+}
+
 function onTrade(topic, payload) {
+  var update = JSON.parse(payload)
   if ( -1 != topic.search('trade/' + APPID) ) {
     //TRADE EVENT
-      announceTrade(JSON.parse(payload))
-      return true // means 'handled'
+      announceTrade(update)
+      return true // means 'finished'
   }
-  return false // means 'not handled'
+  return false // means 'not finished'
 }
 
 function announceTrade(trade) {
+console.log('ANNOUNCING TRADE ' + JSON.stringify(trade))
     var table = document.getElementById("grid")
     var row = table.rows.namedItem('trade_announce')
     if (row == null) {
@@ -26,6 +32,7 @@ function announceTrade(trade) {
 }
 
 function clearTradeAnnounces() {
+console.log('CLEARING TRADES')
     var table = document.getElementById("grid")
     var tradeRow = table.rows.namedItem('trade_announce')
     if (tradeRow != null) 

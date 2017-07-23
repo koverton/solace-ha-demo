@@ -53,6 +53,9 @@ function clearRecord(inst) {
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 
 function initMatcher() {
+  addMsgHandler(onDisconnect)
+  addMsgHandler(onMatcherStatus)
+  addMsgHandler(onOrderEvent)
   updateMatcherUI(data[0])
   updateMatcherUI(data[1])
 }
@@ -101,24 +104,6 @@ function updateCtlButton(record) {
 // Messaging Event Interaction
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -
 
-function onMatcherStatus(topic, payload) {
-    // MATCHER UPDATE
-    var update = JSON.parse(payload)
-    var record = getRecord(update.instance-1)
-    updateRecord(record, update)
-    updateMatcherUI(record)
-    // If the record came from an ACTIVE member, use it's data to update our order stack
-    if (update.haStatus == 'ACTIVE') {
-        //console.log('New update from ' + upd.instance + ' State: ' + upd.haStatus)
-        var stack = update.data
-        if (null != stack && '' != stack) {
-            updateLadder(stack)
-        }
-        return true // means 'handled'
-    }
-    return false // means 'not handled'
-}
-
 function onDisconnect(topic, payload) {
   if ( -1 != topic.search('CLIENT_CLIENT_DISCONNECT') ) {
     // DISCONNECT EVENT
@@ -126,16 +111,26 @@ function onDisconnect(topic, payload) {
     var match = topic.match('[0-9]$')
     if (null != match)
         clearRecord(match[0])
-    return true // means 'handled'
+    return true // means 'finished'
   }
   return false // means 'not handled'
+}
+
+function onMatcherStatus(topic, payload) {
+  var update = JSON.parse(payload)
+  if ('instance' in update) {
+    // MATCHER UPDATE
+    var record = getRecord(update.instance-1)
+    updateRecord(record, update)
+    updateMatcherUI(record)
+  }
+  return false // means 'not finished'
 }
 
 function onOrderEvent(topic, payload) {
   if ( topic == 'order/new' ) {
     updateCtlButton({ instance: 'ogw', running: true })
     document.getElementById('ogw_in').innerHTML = '&darr;'
-    return true // means 'handled'
   }
-  return false // means 'not handled'
+  return false // means 'not finished'
 }

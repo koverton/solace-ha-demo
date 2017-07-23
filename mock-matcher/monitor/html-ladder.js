@@ -6,7 +6,9 @@
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -
 // UI Interaction -- initialize UI & Solace
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
+
 function initLadder() {
+  addMsgHandler(onLadderUpdate)
 }
 
 function makeLadder(table, par, inc) {
@@ -27,6 +29,19 @@ function makeLadder(table, par, inc) {
 function setupNewCell(cell, value, className) {
     cell.className = className
     cell.innerHTML = value
+}
+
+function onLadderUpdate(topic, payload) {
+  var update = JSON.parse(payload)
+    // If the record came from an ACTIVE member, use it's data to update our order stack
+    if (update.haStatus == 'ACTIVE') {
+        //console.log('New update from ' + upd.instance + ' State: ' + upd.haStatus)
+        var stack = update.data
+        if (null != stack && '' != stack) {
+            updateLadder(stack)
+        }
+    }
+    return false // means 'not finished'
 }
 
 function updateLadder(stack) {

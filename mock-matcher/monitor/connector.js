@@ -4,6 +4,11 @@
 
 //// App-specific stuff
 var ha_topics = null
+var callbacks = [ ]
+
+function addMsgHandler(callback) {
+    callbacks.push(callback)
+}
 
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 //       Solace code
@@ -81,15 +86,11 @@ function message_cb(sess, msg, uo, unused) {
   var payload = msg.getBinaryAttachment()
   var topic   = msg.getDestination().getName()
   // punk ass 'chain of responsibility' pattern
-  if ( onOrderEvent(topic, payload) )
-    return
-  if ( onDisconnect(topic, payload) )
-    return
-  if ( onTrade(topic, payload) )
-    return
-  if ( onMatcherStatus(topic, payload) ) {
-    clearTradeAnnounces()
-    return
+  for(var i = 0; i < callbacks.length; i++) {
+    var cbfn = callbacks[i]
+    if (cbfn(topic, payload)) {
+      return
+    }
   }
 }
 

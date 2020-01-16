@@ -1,0 +1,9 @@
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/model/HAState.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/model/SeqState.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/model/ClusterEventListener.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/model/ClusteredAppSerializer.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/conn/DirectMessageHandler.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/model/ClusterModel.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/conn/SolaceConnector.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/conn/Helper.java
+/Users/koverton/github/solace-ha-demo/solace-ha/src/main/java/com/solacesystems/ha/model/ClusterConnector.java

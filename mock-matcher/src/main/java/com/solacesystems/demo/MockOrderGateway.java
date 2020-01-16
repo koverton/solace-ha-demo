@@ -14,20 +14,21 @@ class MockOrderGateway {
     public static void main(String[] args)
     {
 
-        if (args.length < 7)
+        if (args.length < 8)
         {
-            System.out.println("USAGE: SamplePublisher <HOST> <VPN> <USER> <PASS> <PUB-TOPIC> <STARTID> <SYMBOL>");
+            System.out.println("USAGE: MockOrderGateway <HOST> <VPN> <USER> <PASS> <PUB-TOPIC> <STARTID> <SYMBOL> <MID>");
             return;
         }
-        new MockOrderGateway(args[0], args[1], args[2], args[3], args[4], args[5], args[6])
+        new MockOrderGateway(args[0], args[1], args[2], args[3], args[4], args[5], args[6], Double.parseDouble(args[7]))
                 .run();
     }
 
-    private MockOrderGateway(String host, String vpn, String username, String password, String topic, String startId, String symbol)
+    private MockOrderGateway(String host, String vpn, String username, String password, String topic, String startId, String symbol, double midPrice)
     {
         _startOrderId = Integer.parseInt(startId);
         _outTopic = topic;
         _symbol = symbol;
+        _mid = midPrice;
         _connector = new SolaceConnector();
         _connector.ConnectSession(host, vpn, username, password, "MockOrderGW", new SessionEventCallback() {
             public void onEvent(SessionHandle sessionHandle) {
@@ -59,12 +60,13 @@ class MockOrderGateway {
 
     private void sendNextOrder(int oid)
     {
-        ClientOrder order = OrderHelper.nextOrder(oid, _symbol, 100, 0.25);
+        ClientOrder order = OrderHelper.nextOrder(oid, _symbol, _mid, 0.25);
         logger.info("Sending msg: {}", order);
         _connector.SendBuffer(_outTopic, _serializer.SerializeInput(order));
     }
 
     private final String _symbol;
+    private final double _mid;
     private final int _startOrderId;
     private final String _outTopic;
     private final ByteBuffer _outbuf = ByteBuffer.allocate(8192);

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 cd `dirname $0`/..
 
 function usage {
@@ -15,6 +15,7 @@ if [ "Linux" == "$plat" ]; then
 elif [ "Darwin" == "$plat" ]; then
 	solclientlib="../solclientj/osxlib"
 	export DYLD_LIBRARY_PATH=$solclientlib:$DYLD_LIBRARY_PATH
+	export LD_LIBRARY_PATH=$solclientlib:$LD_LIBRARY_PATH
 else
 	echo "	Unknown platform $plat; exitting"
 	usage
@@ -32,12 +33,13 @@ elif [ "$op" == "start" ]; then
 	classpath=target/classes:`mvn dependency:build-classpath | grep repository`
 	java -cp $classpath -Djava.library.path=$solclientlib \
 		com.solacesystems.demo.MockMatchingEngine \
-		$host app1 1 \
-		$vpn m1user pass \
-		order/new \
-		active_matcher/app1/inst2/\> \
-		active_matcher/app1/inst1/new \
-		standby_matcher/app1/inst1/new > logs/matcher1.log&
+		$host $vpn matcher1 pass \
+		$matchapp 1 \
+		$ordertopic \
+		$activetopic/inst2/\> \
+		$activetopic/inst1/new \
+		$standbytopic/inst1/new \
+		$symbol $midpx > logs/matcher1.log&
 	echo $! > logs/matcher1.pid
 
 elif [ "$op" == "stop" ]; then

@@ -121,6 +121,7 @@ function sendRequest(topic, data, replyFunc, failFunc) {
 }
 
 function sendEmpty(topic) {
+console.log('sending message on topic:'+topic)
     var msg = solace.SolclientFactory.createMessage()
     msg.setDestination(solace.SolclientFactory.createTopic(topic))
     msg.setDeliveryMode(solace.MessageDeliveryModeType.DIRECT)

@@ -33,7 +33,7 @@ elif [ "$op" == "start" ]; then
 	java -cp $classpath -Djava.library.path=$solclientlib \
 		com.solacesystems.demo.MockOrderGateway \
 		$host $vpn ogwuser pass \
-		order/new 1 AAPL > logs/ogw.log &
+		order/new 1 $symbol $midpx > logs/ogw.log &
 	echo $! > logs/ogw.pid
 
 elif [ "$op" == "stop" ]; then

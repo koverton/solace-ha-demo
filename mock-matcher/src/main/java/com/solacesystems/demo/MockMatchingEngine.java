@@ -13,22 +13,24 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
     private static final Logger logger = LoggerFactory.getLogger(MockMatchingEngine.class);
 
     public static void main(String[] args) {
-        if (args.length < 10) {
-            System.out.println("USAGE: <IP> <APP-ID> <APP-INST-#> <SOL-VPN> <SOL-USER> <SOL-PASS> <IN-TOPIC> <STATE-TOPIC> <ACTIVE-TOPIC> <STANDBY-TOPIC>\n\n\n");
+        if (args.length < 12) {
+            System.out.println("USAGE: MockMatchingEngine <HOST> <SOL-VPN> <SOL-USER> <SOL-PASS> <APP-ID> <APP-INST-#> <IN-TOPIC> <STATE-TOPIC> <ACTIVE-TOPIC> <STANDBY-TOPIC>\n\n\n");
             return;
         }
         String host        = args[0];
-        String appId       = args[1];
-        int instance       = Integer.parseInt(args[2]);
-        String vpn         = args[3];
-        String user        = args[4];
-        String pass        = args[5];
+        String vpn         = args[1];
+        String user        = args[2];
+        String pass        = args[3];
+        String appId       = args[4];
+        int instance       = Integer.parseInt(args[5]);
         String inTopic     = args[6];
         String stateTopic  = args[7];
         String activeTopic = args[8];
         String standbyTopic= args[9];
+        String instrument  = args[10];
+        double initialPar  = Double.parseDouble(args[11]);
 
-        MockMatchingEngine matcher = new MockMatchingEngine(appId, instance, inTopic, stateTopic, activeTopic, standbyTopic);
+        MockMatchingEngine matcher = new MockMatchingEngine(appId, instance, inTopic, stateTopic, activeTopic, standbyTopic, instrument, initialPar);
 
         matcher.Connect(host, vpn, user, pass);
 
@@ -46,15 +48,15 @@ class MockMatchingEngine implements ClusterEventListener<ClientOrder, MatcherSta
         }
     }
 
-    public MockMatchingEngine(String appId, int instance, String inTopic, String stateTopic, String activeTopic, String standbyTopic) {
+    public MockMatchingEngine(String appId, int instance, String inTopic, String stateTopic, String activeTopic, String standbyTopic, String instrument, double par) {
         _inTopic = inTopic;
         _stateTopic = stateTopic;
         _activeTopic = activeTopic;
         _standbyTopic = standbyTopic;
         // State tracking classes; normally wouldn't include all this stuff, but
         // it's useful in the output monitor to show the complete state of all members
-        _state = new MatcherState( appId, instance, "AAPL"/* TODO: FIX THIS!! */ );
-        _state.setMatcher( new Matcher( 100, 0.25 ) );
+        _state = new MatcherState( appId, instance, instrument );
+        _state.setMatcher( new Matcher( par, 0.25 ) );
         // Underlying cluster model and message-bus connector
         _serializer = new MockMatchingEngineSerializer();
         _connector = new ClusterConnector<ClientOrder, MatcherState>( this, _serializer);

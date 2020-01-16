@@ -32,12 +32,13 @@ elif [ "$op" == "start" ]; then
 	classpath=target/classes:`mvn dependency:build-classpath | grep repository`
 	java -cp $classpath -Djava.library.path=$solclientlib \
 		com.solacesystems.demo.MockMatchingEngine \
-		$host app1 2 \
-		$vpn m2user pass \
-		order/new \
-		active_matcher/app1/inst1/\> \
-		active_matcher/app1/inst2/new \
-		standby_matcher/app1/inst2/new > logs/matcher2.log&
+		$host $vpn matcher2 pass \
+		$matchapp 2 \
+		$ordertopic \
+		$activetopic/inst1/\> \
+		$activetopic/inst2/new \
+		$standbytopic/inst2/new \
+		$symbol $midpx > logs/matcher2.log&
 	echo $! > logs/matcher2.pid
 
 elif [ "$op" == "stop" ]; then

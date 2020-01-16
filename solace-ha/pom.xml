@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.solacesystems</groupId>
+  <groupId>com.solacesystems.demo</groupId>
   <artifactId>solace-ha</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
 
   <name>solace-ha</name>
@@ -12,6 +12,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <slf4j.version>1.7.25</slf4j.version>
     <logback.version>1.2.3</logback.version>
   </properties>
@@ -20,7 +22,7 @@
     <dependency>
       <groupId>com.solacesystems</groupId>
       <artifactId>solclientj</artifactId>
-      <version>7.2.5.7</version>
+      <version>7.11.0.8</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
     <dependency>
@@ -53,4 +55,24 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+<build>
+  <plugins>
+    <plugin>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <version>2.19.1</version>
+      <configuration>
+        <systemPropertyVariables>
+          <propertyName>java.library.path</propertyName>
+          <buildDirectory>/Users/koverton/github/solace-ha-demo/solclientj/osxlib</buildDirectory>
+        </systemPropertyVariables>
+        <environmentVariables>
+          <DYLD_LIBRARY_PATH>/Users/koverton/github/solace-ha-demo/solclientj/osxlib</DYLD_LIBRARY_PATH>
+          <LD_LIBRARY_PATH>/Users/koverton/github/solace-ha-demo/solclientj/lnxlib</LD_LIBRARY_PATH>
+        </environmentVariables>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
 </project>

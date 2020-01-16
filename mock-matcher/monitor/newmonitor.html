@@ -1,0 +1,65 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<script src="./solclient.js"></script>
+<script src="./connector.js"></script>
+<script src="./monitor.js"></script>
+<script src="./matcher.js"></script>
+<script src="./trades.js"></script>
+<script src="./html-ladder.js"></script>
+</head>
+<body onload="init()">
+
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<!--          MONITOR DISPLAY                          -->
+<!-- + - + - + - + - + - + - + - + - + - + - + - + - + -->
+<div>
+      <H1>HA Cluster Demo</H1>
+<TABLE id=grid align=center>
+  <TR><!-- Input arrow ROW -->
+    <TD colspan=3 style="height: 25px">
+      <div align=center id="ogw_in"></div>
+    </TD>
+  </TR>
+  <TR><!-- HEADER ROW -->
+    <td width=110></td>
+    <TD width=110 class="theader" align=left>
+      &nbsp;<button id="ctl1" onclick="procCtl(1);" class="button">X</button> &nbsp;Instance 1
+    </TD>
+    <TD width=110 class="theader" align=right>
+      Instance 2 &nbsp;<button id="ctl2" onclick="procCtl(2);" class="button">X</button>&nbsp;
+    </TD>
+  </TR>
+  <TR><!-- HA STATUS ROW -->
+    <TD width=110 align=right>HA Status:</TD>
+    <TD width=110 id=haStatus1></TD>
+    <TD width=110 id=haStatus2></TD>
+  </TR>
+  <TR><!-- SEQUENCE STATUS ROW -->
+    <TD width=110 align=right>Seq Status:</TD>
+    <TD width=110 id=seqStatus1></TD>
+    <TD width=110 id=seqStatus2></TD>
+  </TR>
+  <TR><!-- LAST INPUT ROW -->
+    <TD width=110 align=right>Last Input:</TD>
+    <TD width=110 id=lastInput1></TD>
+    <TD width=110 id=lastInput2></TD>
+  </TR>
+  <TR><!-- LAST OUTPUT ROW -->
+    <TD width=110 align=right>Last Output:</TD>
+    <TD width=110 id=lastOutput1></TD>
+    <TD width=110 id=lastOutput2></TD>
+    </TR><!-- OGW CTL ROW -->
+  <!-- TRADE ANNOUNCEMENTS ROW -->
+  <TR id="trade_announce">
+    <TD class="trade" colspan=3></TD>
+  </TR>
+  <TR><!-- DYNAMIC PRICE LADDER STARTING ROW -->
+    <td></td><TD colspan=2><div id="ladder"></div></TD>
+  </TR>
+</TABLE>
+</div>
+
+</body>
+</html>

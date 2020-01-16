@@ -2,13 +2,13 @@
 //        Monitor Variables
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 
-var APPID = 'app1'
+var APPID = 'aaplmatcher'
 
 //// My local VMR
 //  url  : 'ws://35.184.60.189',
 var vmr_props = {
-    url  : 'ws://192.168.56.151',
-    vpn  : 'ha_demo',
+    url  : 'ws://localhost',
+    vpn  : 'default',
     user : 'monitor',
     pass : 'monitor'
 }
@@ -19,20 +19,13 @@ var google_props = {
     user : 'monitor',
     pass : 'monitor'
 }
-//// My DataGo Service
-var datago_props = {
-    url  : 'ws://msgvpn-3419.messaging.datago.io:20131',
-    vpn  : 'msgvpn-3419',
-    user : 'datago-client-username',
-    pass : '72f9nie8jpfdaj8gjse23vr21t'
-}
 
 var ha_topics = {
     active_sub  : 'active_matcher/'  + APPID + '/>',
     standby_sub : 'standby_matcher/' + APPID + '/>',
     trade_sub   : 'trade/'           + APPID + '/>',
     disconn_sub : '#LOG/INFO/CLIENT/*/CLIENT_CLIENT_DISCONNECT/>',
-    order_sub   : 'order/new'
+    order_sub   : 'order/new/AAPL'
 }
 
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + -
@@ -44,13 +37,14 @@ function init() {
   initMatcher()
   if (typeof(initTrades) === 'function') initTrades()
   if (typeof(initLadder) === 'function') initLadder()
-  initSolaceConn(google_props, ha_topics)
+  initSolaceConn(vmr_props, ha_topics)
 }
 
 // Invoked by various buttons for each instance;
 // depending on the current record state may request
 // either starting or stopping of the instance
 function procCtl(instance) {
+console.log('inst: ' + instance)
     var fldname = 'ctl' + instance
     var field = document.getElementById(fldname)
     var srv = 'matcher'

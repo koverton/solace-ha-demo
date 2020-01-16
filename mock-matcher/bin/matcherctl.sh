@@ -1,5 +1,18 @@
-#!/bin/bash
+#!/bin/bash -x
 cd `dirname $0`/..
+
+plat=`uname`
+if [ "Linux" == "$plat" ]; then
+	solclientlib="../solclientj/lnxlib"
+	export LD_LIBRARY_PATH=$solclientlib:$LD_LIBRARY_PATH
+elif [ "Darwin" == "$plat" ]; then
+	solclientlib="../solclientj/osxlib"
+	export DYLD_LIBRARY_PATH=$solclientlib:$DYLD_LIBRARY_PATH
+else
+	echo "	Unknown platform $plat; exitting"
+	usage
+	exit 1
+fi
 
 function now() {
 	date -u +"%Y-%m-%dT%H:%M:%SZ"
@@ -46,7 +59,7 @@ else
 	tdump_exe=bin/topic_dump.lnx
 fi
 
-$tdump_exe $host $vpn huntsman x app1/control/\> | \
+$tdump_exe $host $vpn huntsman x $matchapp/control/\> | \
 	while read -r topic; do 
 		dispatch $topic
 	done

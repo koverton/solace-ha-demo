@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: com.solacesystems.ha.ClusterFunctionalTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.169 sec <<< FAILURE! - in com.solacesystems.ha.ClusterFunctionalTest
+theTest(com.solacesystems.ha.ClusterFunctionalTest)  Time elapsed: 0.149 sec  <<< ERROR!
+java.lang.UnsatisfiedLinkError: no solclient_jni in java.library.path
+	at com.solacesystems.ha.ClusterFunctionalTest.createAndStartInstance(ClusterFunctionalTest.java:17)
+	at com.solacesystems.ha.ClusterFunctionalTest.setup(ClusterFunctionalTest.java:35)
+
+theTest(com.solacesystems.ha.ClusterFunctionalTest)  Time elapsed: 0.149 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.solacesystems.ha.ClusterFunctionalTest.tearDown(ClusterFunctionalTest.java:97)
+

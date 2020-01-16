@@ -1,7 +1,7 @@
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
 //        Trade Display Code
 //  - + - + - + - + - + - + - + - + - + - + - + - + - + - 
-var APPID       = 'app1'
+var APPID       = 'aaplmatcher'
 
 function initTrades() {
   addMsgHandler(onTrade)

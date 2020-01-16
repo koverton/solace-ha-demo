@@ -2,8 +2,8 @@ var data = [ ]
 
 //// Google compute VMR
 var google_props = {
-    url  : 'ws://104.155.140.201',
-    vpn  : 'ha_demo',
+    url  : 'ws://localhost',
+    vpn  : 'default',
     user : 'monitor',
     pass : 'monitor'
 }

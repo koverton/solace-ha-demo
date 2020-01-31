@@ -32,3 +32,6 @@ out/
 *.iml
 *.ipr
 *.iws
+mock-matcher/logs/matcher1.pid
+mock-matcher/target/maven-archiver/pom.properties
+solace-ha/target/maven-archiver/pom.properties

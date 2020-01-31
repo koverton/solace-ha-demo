@@ -4,6 +4,14 @@
 
 var APPID = 'aaplmatcher'
 
+//// NY Lab Appliances
+//  url  : 'ws://192.168.168.105',
+var lab_props = {
+    url  : 'ws://192.168.168.105',
+    vpn  : 'default',
+    user : 'monitor',
+    pass : 'monitor'
+}
 //// My local VMR
 //  url  : 'ws://35.184.60.189',
 var vmr_props = {

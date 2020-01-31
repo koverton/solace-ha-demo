@@ -85,6 +85,9 @@ function updateCtlButton(record) {
         return
     }
     field.disabled  = false
+    console.log('Updating control button')
+    console.log(field)
+    console.log(record)
     if (record.instance == 'ogw') {
       if (record.running) {
         btnStyle(field, 'X', 'Click to Stop', 'red')
@@ -128,7 +131,7 @@ function onMatcherStatus(topic, payload) {
 }
 
 function onOrderEvent(topic, payload) {
-  if ( topic == 'order/new' ) {
+  if ( topic == 'order/new/AAPL' ) {
     updateCtlButton({ instance: 'ogw', running: true })
     document.getElementById('ogw_in').innerHTML = '&darr;'
   }

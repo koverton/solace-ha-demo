@@ -14,6 +14,7 @@ if [ "Linux" == "$plat" ]; then
 	export LD_LIBRARY_PATH=$solclientlib:$LD_LIBRARY_PATH
 elif [ "Darwin" == "$plat" ]; then
 	solclientlib="../solclientj/osxlib"
+	export LD_LIBRARY_PATH=$solclientlib:$LD_LIBRARY_PATH
 	export DYLD_LIBRARY_PATH=$solclientlib:$DYLD_LIBRARY_PATH
 else
 	echo "	Unknown platform $plat; exitting"
